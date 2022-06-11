@@ -1,0 +1,45 @@
+Return-Path: <anmeldung@zeltlager-braeunlingen.de>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mx2efc.netcup.net
+X-Spam-Level: 
+X-Spam-Status: No, score=0.5 required=7.0 tests=HTML_MESSAGE,
+	HTML_MIME_NO_HTML_TAG,MIME_HTML_ONLY,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+	T_SPF_HELO_TEMPERROR autolearn=no autolearn_force=no version=3.4.2
+X-Original-To: anmeldung@zeltlager-braeunlingen.de
+Delivered-To: anmeldung@zeltlager-braeunlingen.de
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.169])
+	by mx2efc.netcup.net (Postfix) with ESMTPS id 99CEF1A0048
+	for <anmeldung@zeltlager-braeunlingen.de>; Wed, 25 May 2022 15:03:17 +0200 (CEST)
+Authentication-Results: mx2efc;
+	spf=pass (sender IP is 188.68.63.169) smtp.mailfrom=anmeldung@zeltlager-braeunlingen.de smtp.helo=relay.yourmailgateway.de
+Received-SPF: pass (mx2efc: domain of zeltlager-braeunlingen.de designates 188.68.63.169 as permitted sender) client-ip=188.68.63.169; envelope-from=anmeldung@zeltlager-braeunlingen.de; helo=relay.yourmailgateway.de;
+Received: from mors-relay8203.netcup.net (localhost [127.0.0.1])
+	by mors-relay8203.netcup.net (Postfix) with ESMTPS id 4L7WT86hd4z8Z24
+	for <anmeldung@zeltlager-braeunlingen.de>; Wed, 25 May 2022 13:03:08 +0000 (UTC)
+Authentication-Results: mors-relay8203.netcup.net; dkim=permerror (bad message/signature format)
+Received: from policy02-mors.netcup.net (unknown [46.38.225.53])
+	by mors-relay8203.netcup.net (Postfix) with ESMTPS id 4L7WT86Hqmz8Z1p
+	for <anmeldung@zeltlager-braeunlingen.de>; Wed, 25 May 2022 13:03:08 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at policy02-mors.netcup.net
+Received: from a2efa.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4L7WT81lVbz8svQ
+	for <anmeldung@zeltlager-braeunlingen.de>; Wed, 25 May 2022 15:03:08 +0200 (CEST)
+Received: by a2efa.netcup.net (Postfix, from userid 31207)
+	id C229F1A0101; Wed, 25 May 2022 15:02:26 +0200 (CEST)
+To: anmeldung@zeltlager-braeunlingen.de
+Subject: Neue Anmeldung - Kinderlager
+Date: Wed, 25 May 2022 13:02:26 +0000
+From: "anmeldung@zeltlager-braeunlingen.de" <anmeldung@zeltlager-braeunlingen.de>
+Reply-To: beckaebaschi@web.con
+Message-ID: <Ff2ns8b22CFnSabbpTEzenzsygRK1KeVs7LQ8omOI@zeltlager-braeunlingen.de>
+X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-NC-CID: 0d6QAFoxFqm0hFAUYKAF+dm7imQhi1BExJeNd9qCU3vdPxjMVDcAZNZ3I93SMPt0DOvY
+X-NC-CID: W/pcaKXAWGv7FVP7foAVjy4mrNsvqLTvpsvruwQSpyJBuuR8ARD03iwUQfkaD5FZq9bR
+
+Nachname des Kindes: Grieshaber <br/>Vorname des Kindes: Lorenz <br/>Nachname des/der Erziehungsberechtigten: Grieshaber <br/>Vorname des/der Erziehungsberechtigten: Yvonne <br/>Geburtsdatum des Kindes: 12 / 09 / 2008 <br/>E-Mail: beckaebaschi@web.con <br/>Telefonnummer: 07707 989146 <br/>Straße und Hausnummer: Tunnelweg 1a <br/>PLZ: 78199 <br/>Ort: Döggingen/Bräunlingen  <br/>Ich bin Mitglied bei ...: Ministranten Döggingen <br/>Ich war ...: schon einmal auf dem Zeltlager dabei <br/>
+

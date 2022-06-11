@@ -1,0 +1,46 @@
+Return-Path: <anmeldung@zeltlager-braeunlingen.de>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mx2efc.netcup.net
+X-Spam-Level: **
+X-Spam-Status: No, score=2.6 required=7.0 tests=FREEMAIL_FORGED_REPLYTO,
+	HTML_MESSAGE,HTML_MIME_NO_HTML_TAG,MIME_HTML_ONLY,SPF_HELO_PASS,
+	SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.2
+X-Original-To: anmeldung@zeltlager-braeunlingen.de
+Delivered-To: anmeldung@zeltlager-braeunlingen.de
+Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.165])
+	by mx2efc.netcup.net (Postfix) with ESMTPS id 6030E1A0048
+	for <anmeldung@zeltlager-braeunlingen.de>; Tue,  7 Jun 2022 22:31:11 +0200 (CEST)
+Authentication-Results: mx2efc;
+	spf=pass (sender IP is 188.68.63.165) smtp.mailfrom=anmeldung@zeltlager-braeunlingen.de smtp.helo=relay.yourmailgateway.de
+Received-SPF: pass (mx2efc: domain of zeltlager-braeunlingen.de designates 188.68.63.165 as permitted sender) client-ip=188.68.63.165; envelope-from=anmeldung@zeltlager-braeunlingen.de; helo=relay.yourmailgateway.de;
+Received: from mors-relay-8202.netcup.net (localhost [127.0.0.1])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4LHhp71nVMz3vnm
+	for <anmeldung@zeltlager-braeunlingen.de>; Tue,  7 Jun 2022 22:31:11 +0200 (CEST)
+Authentication-Results: mors-relay-8202.netcup.net; dkim=permerror (bad message/signature format)
+Received: from policy02-mors.netcup.net (unknown [46.38.225.53])
+	by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4LHhp71PS9z3vnK
+	for <anmeldung@zeltlager-braeunlingen.de>; Tue,  7 Jun 2022 22:31:11 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at policy02-mors.netcup.net
+Received: from a2efa.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy02-mors.netcup.net (Postfix) with ESMTPS id 4LHhp65j5Gz8sZY
+	for <anmeldung@zeltlager-braeunlingen.de>; Tue,  7 Jun 2022 22:31:10 +0200 (CEST)
+Received: by a2efa.netcup.net (Postfix, from userid 31207)
+	id 6D3CC1A00FF; Tue,  7 Jun 2022 22:30:48 +0200 (CEST)
+To: anmeldung@zeltlager-braeunlingen.de
+Subject: Neue Anmeldung - XXL
+Date: Tue, 7 Jun 2022 20:30:48 +0000
+From: "anmeldung@zeltlager-braeunlingen.de" <anmeldung@zeltlager-braeunlingen.de>
+Reply-To: k.bury@gmx.de
+Message-ID: <yVJydHba0TJiZM5yHdETwQB5X95W8qBUwq2AsIMIfrY@zeltlager-braeunlingen.de>
+X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-NC-CID: wV/7iHpsM+cdrjkay7V3/nt/OC9GcGONxjuj8d0q9TVcC3ya0EUHW8Gd+ebXn8iKFVaB
+X-NC-CID: sJS9Lgot9IZYbQi3pTEhk7GY4GiDua9qND1UnXe01/9I+99t470IbjxUzS0NP/Wk+aO3
+
+Nachname des/der Teilnehmenden: Hepting <br/>Vorname des/der Teilnehmenden: Lena <br/>Geburtsdatum des/der Teilnehmenden: 29/08/2007 <br/>E-Mail: k.bury@gmx.de <br/>Telefonnummer: 077117516900 <br/>Straße und Hausnummer: Kreidenweg 1a <br/>PLZ: 78166 <br/>Ort: Donaueschingen  <br/>normales Standlager: true <br/>verlängertes Standlager: false <br/>Wanderlager: false <br/>Ich bin Mitglied bei ...: Nirgends, aber ich habe trotzdem Lust aufs Zeltlager <br/>Auf dem Kinderlager war ich ...: nie dabei <br/>Auf dem XXL war ich ...: 1x dabei <br/>
+

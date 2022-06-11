@@ -1,0 +1,43 @@
+Return-Path: <anmeldung@zeltlager-braeunlingen.de>
+X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on mx2efc.netcup.net
+X-Spam-Level: **
+X-Spam-Status: No, score=2.6 required=7.0 tests=FREEMAIL_FORGED_REPLYTO,
+	HTML_MESSAGE,HTML_MIME_NO_HTML_TAG,MIME_HTML_ONLY,SPF_HELO_NONE,
+	SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+	autolearn_force=no version=3.4.2
+X-Original-To: anmeldung@zeltlager-braeunlingen.de
+Delivered-To: anmeldung@zeltlager-braeunlingen.de
+Received: from mors-relay-8403.netcup.net (relay.yourmailgateway.de [188.68.61.101])
+	by mx2efc.netcup.net (Postfix) with ESMTPS id E040F1A0042
+	for <anmeldung@zeltlager-braeunlingen.de>; Sun,  5 Jun 2022 17:47:09 +0200 (CEST)
+Authentication-Results: mx2efc;
+	spf=pass (sender IP is 188.68.61.101) smtp.mailfrom=anmeldung@zeltlager-braeunlingen.de smtp.helo=mors-relay-8403.netcup.net
+Received-SPF: pass (mx2efc: domain of zeltlager-braeunlingen.de designates 188.68.61.101 as permitted sender) client-ip=188.68.61.101; envelope-from=anmeldung@zeltlager-braeunlingen.de; helo=mors-relay-8403.netcup.net;
+Received: from policy01-mors.netcup.net (unknown [46.38.225.53])
+	by mors-relay-8403.netcup.net (Postfix) with ESMTPS id 4LGLbK61dMz7xgr
+	for <anmeldung@zeltlager-braeunlingen.de>; Sun,  5 Jun 2022 17:47:09 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
+Received: from a2efa.netcup.net (unknown [10.243.12.53])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by policy01-mors.netcup.net (Postfix) with ESMTPS id 4LGLTY357Fz8sgB
+	for <anmeldung@zeltlager-braeunlingen.de>; Sun,  5 Jun 2022 17:42:09 +0200 (CEST)
+Received: by a2efa.netcup.net (Postfix, from userid 31207)
+	id C07691A00FF; Sun,  5 Jun 2022 17:35:22 +0200 (CEST)
+To: anmeldung@zeltlager-braeunlingen.de
+Subject: Neue Anmeldung - Kinderlager
+Date: Sun, 5 Jun 2022 15:35:22 +0000
+From: "anmeldung@zeltlager-braeunlingen.de" <anmeldung@zeltlager-braeunlingen.de>
+Reply-To: susanne.falkowski@gmx.de
+Message-ID: <aPvljVgk71lZ9rgR2HkzJaLdFshCvVnL4TptwJ2993I@zeltlager-braeunlingen.de>
+X-Mailer: PHPMailer 6.6.0 (https://github.com/PHPMailer/PHPMailer)
+MIME-Version: 1.0
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+X-NC-CID: MNyWD3ftnFP8mvTw/RjRbGDJQ03z4UQnsE03TV+dy4gjX0uPkNVO3AijIrlZoGCdjjpl
+X-MORS-HopCount: 1
+X-NC-CID: RydpwcOjR0lcRR7m8iAEdqWnVKthrKc2CR5EGN9YMp1AwdSXSsbsVepGcHfPqBcVIpQh
+
+Nachname des Kindes: Poppinga <br/>Vorname des Kindes: Jule <br/>Nachname des/der Erziehungsberechtigten: Falkowski <br/>Vorname des/der Erziehungsberechtigten: Susanne <br/>Geburtsdatum des Kindes: 12112011 <br/>E-Mail: susanne.falkowski@gmx.de <br/>Telefonnummer: 01704080472 <br/>Straße und Hausnummer: Mozartstraße 14 <br/>PLZ: 78199 <br/>Ort: Bräunlingen  <br/>Ich bin Mitglied bei ...: Nirgends, aber ich habe trotzdem Lust aufs Zeltlager <br/>Ich war ...: noch nie dabei <br/>Meine Gruppenleiter:innen sind ...: Unbekannt <br/>Das wäre mir noch ein Anliegen ...: Jule hat sich im April den Ellenbogen gebrochen. Es ist wieder alles verheilt: aber der Arm ist noch nicht 100% belastbar.  <br/>
+
