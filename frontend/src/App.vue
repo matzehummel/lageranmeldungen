@@ -1,18 +1,24 @@
 <template>
-  <v-app>
-    <v-app-bar
+  <v-app style="background-color: #ddd6c4;">
+    <v-app-bar app color="#ddd6c4" >
+      <!-- Adjust the height to your needs, mine is 40 -->
+      <img :src="require('./assets/logo.png')" height="50"/>
+      <v-spacer></v-spacer>
+    </v-app-bar>
+    <!--<v-app-bar
       app
-      color="primary"
+      color="#ddd6c4"
       dark
     >
-      <div class="d-flex align-center">
+      <div class="align-center">
         <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
+          alt="shrink Vuetify Logo"
+          class="mr-2"
+          
+          src="./assets/logo.png"
           transition="scale-transition"
-          width="40"
+          
+          width="200"
         />
 
         <v-img
@@ -35,7 +41,7 @@
         <span class="mr-2">Latest Release</span>
         <v-icon>mdi-open-in-new</v-icon>
       </v-btn>
-    </v-app-bar>
+    </v-app-bar>-->
 
     <v-main>
       <HelloWorld/>

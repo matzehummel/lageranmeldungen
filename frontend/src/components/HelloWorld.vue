@@ -1,5 +1,8 @@
 <template>
-  <v-container >
+  <v-container>
+    <v-row>
+      <v-col><h1 primary style="text-align: #495c41; color: primary;">Willkommen bei der Anmeldung für's Zeltlager 2023!</h1></v-col>
+    </v-row>
     <v-row class="text-center">
       <v-col md="8" xs="12" class="mx-auto my-2">
         <!--<v-row>
@@ -12,7 +15,7 @@
               md="6" xs="12"
             >
               <v-text-field
-                v-model="firstname"
+                v-model="childLastName"
                 :rules="nameRules"
                 label="Nachname des Kindes"
                 required
@@ -24,7 +27,7 @@
               md="6" xs="12"
             >
               <v-text-field
-                v-model="secondname"
+                v-model="childFirstName"
                 :rules="nameRules"
                 label="Vorname des Kindes"
                 required
@@ -36,7 +39,7 @@
               md="6" xs="12"
             >
               <v-text-field
-                v-model="firstname"
+                v-model="parentsLastName"
                 :rules="nameRules"
                 label="Nachname der/des Erziehungsberechtigten"
                 required
@@ -45,10 +48,11 @@
 
           <v-col cols="12" md="6" xs="12">
             <v-text-field
-                v-model="secondname"
+                v-model="parentsFirstName"
                 :rules="nameRules"
                 label="Vorname der/des Erziehungsberechtigten"
                 required
+                color="primary"
               ></v-text-field>
           </v-col>
 
@@ -57,24 +61,25 @@
               ref="menu"
               v-model="menu"
               :close-on-content-click="false"
-              :return-value.sync="date"
+              :return-value.sync="birthday"
               transition="scale-transition"
               offset-y
               min-width="290px"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="date"
+                  v-model="birthday"
                   label="Geburtstag des Kindes"
                   readonly
                   v-bind="attrs"
                   v-on="on"
+                  :rules="birthdayRules"
                 ></v-text-field>
               </template>
-              <v-date-picker v-model="date" no-title scrollable locale="de" required>
+              <v-date-picker v-model="birthday" no-title scrollable locale="de" required>
                 <v-spacer></v-spacer>
                 <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                <v-btn text color="primary" @click="$refs.menu.save(birthday)">OK</v-btn>
               </v-date-picker>
             </v-menu>
           </v-col>
@@ -92,6 +97,7 @@
             <v-text-field
                 v-model="secondname"
                 label="Telefonnummer"
+                :rules="nameRules"
                 required
               ></v-text-field>
           </v-col>
@@ -100,6 +106,7 @@
             <v-text-field
                 v-model="secondname"
                 label="Straße und Hausnummer"
+                :rules="nameRules"
                 required
               ></v-text-field>
           </v-col>
@@ -108,6 +115,7 @@
             <v-text-field
                 v-model="secondname"
                 label="PLZ"
+                :rules="nameRules"
                 required
               ></v-text-field>
           </v-col>
@@ -116,25 +124,28 @@
             <v-text-field
                 v-model="secondname"
                 label="Ort"
+                :rules="nameRules"
                 required
               ></v-text-field>
           </v-col>
 
           <v-col cols="12" md="6" xs="12">
             <v-select
-                v-model="secondname"
+                v-model="memberOf"
                 label="Ich bin Mitglied bei ..."
                 :items="['Ministranten Bräunlingen', 'Ministranten Döggingen', 'Nirgends, aber ich hab\' trotzdem Lust auf\'s Zeltlager']"
                 required
+                :rules="selectRules"
               ></v-select>
           </v-col>
 
           <v-col cols="12" md="6" xs="12">
             <v-select
-                v-model="secondname"
+                v-model="experience"
                 label="Ich war ..."
                 :items="['schon einmal auf dem Zeltlager dabei', 'noch nie dabei']"
                 required
+                :rules="selectRules"
               ></v-select>
           </v-col>
 
@@ -166,7 +177,7 @@
           </v-col>
           <v-col cols="12" md="3" xs="12">
             <v-radio-group label="Ich kann ..." required v-model="swim">
-              <v-radio label="schwimmen" value="1"></v-radio>
+              <v-radio label="schwimmen" value="1" :color=primary></v-radio>
               <v-radio label="NICHT schwimmen" value="0"></v-radio>
             </v-radio-group>
           </v-col>
@@ -191,7 +202,7 @@
           </v-col>
           <v-col cols="12" md="12" xs="12">
             <p style="text-align:left">Folgende besonderen Krankheiten, Allergien, Lebensmittelverträglichkeiten, Operationen, Unfälle, etc. verlangen während dem Zeltlager in besonderer Weise Vorsicht und Rücksichtnahme (bitte auch Auflistung von Medikamenten, die während der Freizeit zu nehmen sind):</p>
-            <v-textarea
+            <v-textarea background-color="accent"
                 v-model="secondname"
               ></v-textarea>
           </v-col>
@@ -210,7 +221,7 @@
           </v-col>
           <v-col cols="12" md="12" xs="12">
             <v-textarea
-                v-model="secondname" label="Das wäre mir noch ein Anliegen ..."
+                v-model="secondname" label="Das wäre mir noch ein Anliegen ..." background-color="accent"
               ></v-textarea>
           </v-col>
           <v-col cols="12" md="12" xs="12">
@@ -226,7 +237,7 @@
             <v-checkbox :label=checkboxTextPKW required></v-checkbox>
           </v-col>
           <v-row class="my-5">
-            <h2>Weiterer Ablauf</h2>
+            <h2 style=" color: #495c41;">Weiterer Ablauf</h2>
             <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt habt, erhältst Du nochmal eine Bestätigungsmail mit den angegebenen Daten.
               Vor dem Vortreffen erhältst Du die hier angegebenen Daten zur Bestätigung nochmal zugestellt.
               Die Zusammenfassung Deiner Daten lässt Du von Deinen Eltern unterschreiben und bringst sie zum Vortreffen mit.
@@ -235,8 +246,8 @@
             <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
               auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
               Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-            <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2023 mit Euch!<br></p>
-            <p style="text-align: left;">Liebe Grüße, Euer Zeltlager-Team</p>
+            <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2023 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+
           </v-row>
         </v-row>
       </v-col>
@@ -251,8 +262,53 @@
 
     data () {
       return {
-        date: new Date().toISOString().substring(0,10),
+        childLastName: '',
+        childFirstName: '',
+        parentsLastName: '',
+        parentsFirstName: '',
+        nameRules: [
+          value => {
+            if (value) return true
+            return 'Bitte ausfüllen.'
+          }
+        ],
+
         menu: false,
+        birthday: new Date().toISOString().substring(0,10),
+        birthdayRules: [
+          value => {
+            if (new Date(value) > new Date("2013-07-01")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
+            if (new Date(value) < new Date("2009-07-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
+            return true 
+          },
+        ],
+        
+        email: '',
+        emailRules: [
+          value => {
+            if (value) return true
+            return 'Bitte eine E-Mail-Adresse angeben.'
+          },
+          value => {
+            if (/.+@.+\..+/.test(value)) return true
+            return 'Diese E-Mail-Adresse ist nicht gültig.'
+          },
+        ],
+
+        phone: '',
+        address: '',
+        plz: '',
+        city: '',
+
+        memberOf: '',
+        experience: '',
+        selectRules: [
+          value => {
+            if (value) return true
+            return 'Bitte auswählen.'
+          },
+        ],
+        
         tetanus: "1",
         swim: "1",
         swimAllowed: "1",
