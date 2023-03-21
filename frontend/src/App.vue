@@ -44,19 +44,19 @@
     </v-app-bar>-->
 
     <v-main>
-      <HelloWorld/>
+      <Form/>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import Form from './components/Form';
 
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
+    Form,
   },
 
   data: () => ({
