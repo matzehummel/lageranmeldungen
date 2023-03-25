@@ -278,6 +278,8 @@
 </template>
 
 <script>
+import axios from 'axios'
+
   export default {
     name: 'HelloWorld',
 
@@ -377,10 +379,29 @@
       async confirmRegistration() {
         const valid = await this.validateForm();
         if(valid) {
-          window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
+          const response = await this.sendData();
+          console.log(response);
+          //window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
         } else {
           this.scrollToTop()
         }
+      },
+      async sendData() {
+        
+        axios.post('http://localhost:5000/registration', {
+          childLastName: this.childLastName,
+          childFirstName: this.childFirstName,
+          parentsLastName: this.parentsLastName,
+          parentsFirstName: this.parentsFirstName, 
+          birthday: this.birthday
+        })
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+
       }
     }
   }
