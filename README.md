@@ -1,10 +1,12 @@
-# Initial Project setup
-```npm install -g @vue/cli```
-```vue create frontend```
-```vue add vuetify```
+# Initial project setup
 
-# Project setup
+```
+git clone https://gitlab.com/ma-hummel/lageranmeldungen.git
+```
 
-```cd frontend```
-```npm install -g @vue/cli```
-```npm install```
+## API Specification
+
+```
+POST /registration
+TODO
+```
