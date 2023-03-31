@@ -1,22 +1,26 @@
+from dotenv import load_dotenv
+import os
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
+from pymongo import MongoClient
+
+load_dotenv()
 
 app = Flask(__name__)
 CORS(app, origins="*")
 
-@app.route('/')
-def index():
-    return 'Hello, World!'
-
+mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
+mongoClient = MongoClient(mongodb_connection_string)
+db = mongoClient.lageranmeldungen
+print("Connected to database")
 
 @app.route('/registration', methods=['POST'])
 @cross_origin()
-def submit_data():
-    print(request)
+def add_registration():
     data = request.get_json()
-    print(data)
-    # do something with the data
-    return 'Data received: {}'.format(data)
+    collection = db["registrations"]
+    result = collection.insert_one(data)
+    return 'New registration added to database: ' + str(result.inserted_id)
 
 if __name__ == '__main__':
     app.run(debug=True)

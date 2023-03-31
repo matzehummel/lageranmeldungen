@@ -343,10 +343,10 @@ import axios from 'axios'
         swimAllowed: "1",
         vegetarian: "0",
         milk: "1",
+        issues: "",
         availability: "1",
         alternativeAddress: "",
         sonst: "",
-        issues: "",
 
         checkboxTextAufsicht: "Für die Dauer der Freizeit wird das Erziehungsrecht und die Aufsichtspflicht den Leiter*innen übertragen. *",
         checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
@@ -393,7 +393,25 @@ import axios from 'axios'
           childFirstName: this.childFirstName,
           parentsLastName: this.parentsLastName,
           parentsFirstName: this.parentsFirstName, 
-          birthday: this.birthday
+          birthday: this.birthday,
+          email: this.email,
+          phone: this.phone,
+          address: this.address,
+          plz: this.plz,
+          city: this.city,
+          memberOf: this.memberOf,
+          experience: this.experience,
+          supervisors: this.supervisors,
+          insurance: this.insurance,
+          tetanus: this.tetanus,
+          swim: this.swim,
+          swimAllowed: this.swimAllowed,
+          vegetarian: this.vegetarian,
+          milk: this.milk,
+          issues: this.issues,
+          availability: this.availability,
+          alternativeAddress: this.alternativeAddress,
+          sonst: this.sonst,
         })
         .then(response => {
           console.log(response.data)
