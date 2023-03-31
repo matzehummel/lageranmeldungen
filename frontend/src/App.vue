@@ -46,17 +46,20 @@
     <v-main>
       <Form/>
     </v-main>
+    <AppFooter/>
   </v-app>
 </template>
 
 <script>
 import Form from './components/Form';
+import AppFooter from './components/AppFooter';
 
 export default {
   name: 'App',
 
   components: {
     Form,
+    AppFooter
   },
 
   data: () => ({
