@@ -23,6 +23,8 @@ def add_registration():
     data = request.get_json()
     collection = db["registrations"]
     result = collection.insert_one(data)
+    #pdf = create_pdf
+    #send_Mail(pdf)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 def send_Mail():
