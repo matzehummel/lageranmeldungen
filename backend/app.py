@@ -23,14 +23,16 @@ def add_registration():
     data = request.get_json()
     collection = db["registrations"]
     result = collection.insert_one(data)
-    #pdf = create_pdf
-    #send_Mail(pdf)
+    #pdf = create_pdf(data)
+    #send_Mail(data, pdf)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 def send_Mail():
     smtp_server="mx2efc.netcup.net"
     mail_sender="anmeldung@zeltlager-braeunlingen.de"
     mail_receiver="johannesdold2002@gmail.com"
+    # mail_receiver = data.email
+    password = os.environ.get('EMAIL_PASSWORD')
     password=input("type mail-password:")
 
     body="<p>Hallo</p>"

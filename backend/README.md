@@ -9,6 +9,7 @@ pip install -r requirements.txt
 ## Create .env file with following content:
 ```
 MONGODB_CONNECTION_STRING=mongodb+srv://simba:<password>@mhcluster.hg1tjoa.mongodb.net/?retryWrites=true&w=majority
+EMAIL_PASSWORD=<mail-password>
 ```
 
 ## Run backend in development mode
