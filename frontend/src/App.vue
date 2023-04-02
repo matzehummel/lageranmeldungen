@@ -1,4 +1,4 @@
-  <template>
+<template>
   <v-app style="background-color: #ddd6c4;">
     <v-app-bar app color="#ddd6c4" >
       <!-- Adjust the height to your needs, mine is 40 -->
