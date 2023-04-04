@@ -62,7 +62,7 @@ def send_Mail(data, PDFfilename):
     Dein Zeltlager</p>
     """.format(data["childFirstName"],data["childLastName"])
 
-    message=MIMEMultipart("alternative")
+    message=MIMEMultipart()
     message["subject"]="Erfolgreiche Anmeldung"
     message["From"]=mail_sender
     message["To"]=mail_receiver
@@ -71,12 +71,12 @@ def send_Mail(data, PDFfilename):
 
     #Mail-Attachment anhaengen
     with open("pdf/"+PDFfilename,"rb")as attachment:
-        pdf = MIMEBase("application","octet-stream")
+        pdf = MIMEBase("application/pdf","octet-stream")
         pdf.set_payload(attachment.read())
     encoders.encode_base64(pdf)
     pdf.add_header(
         "Content-Disposition",
-        f"attachment; filename= {PDFfilename}",
+        "attachment", filename= PDFfilename
     )
     message.attach(pdf)
 

@@ -29,3 +29,5 @@
 */*.njsproj
 */*.sln
 */*.sw?
+
+*/pdf/*
