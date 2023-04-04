@@ -1,6 +1,83 @@
-<h1 style="text-align:center"><strong>Deine Daten</strong></h1>
+<h1 style="text-align:left" class="default"><strong>Anmeldung f&uuml;r das Zeltlager 2023</strong></h1>
+<h2 class="default">Name: {{childFirstName}} {{childLastName}}</h2>
 
-<table align="left" border="1" cellpadding="1" cellspacing="1" style="width:1175px">
+<p><strong>Erziehungsberechtigte(r):</strong> {{parentsFirstName}} {{parentsLastName}}</p>
+<p><strong>Geburtsdatum des Kindes:</strong> {{birthday}}</p>
+
+<table align="left" border="0" cellpadding="1" cellspacing="1" style="width:1175px" class="default">
+	<tbody>
+		<tr>
+			<td>
+			<strong>E-Mail</strong>
+			</td>
+			<td style="width:400px">{{email}}</td>
+			<td>
+			<strong>Telefonnummer</strong>
+			</td>
+			<td style="width:400px">{{phone}}</td>
+		</tr>
+	</tbody>
+</table>
+</hr>
+
+<p><strong>Adresse:</strong></br>{{address}}</br>{{plz}} {{city}}}</p>
+
+<p><strong>Ich war ... </strong> {{experience}}</p>
+<p><strong>Ich bin Mitglied bei ... </strong> {{memberOf}}</p>
+<p><strong>Meine Gruppenleiter sind ... </strong> {{supervisors}}</p>
+<table align="left" border="0" cellpadding="1" cellspacing="1" style="width:1175px" class="default">
+	<tbody>
+		<tr>
+			<td>
+			<strong>Meine Krankenversicherung:</strong>
+			</td>
+			<td style="width:400px">{{insurance}}</td>
+		</tr>
+		<tr>
+			<td>
+			<strong>Gegen Tetanus ... </strong>
+			</td>
+			<td style="width:400px">{{tetanus}}</td>
+			<td>
+			<strong>Ich kann ...</strong>
+			</td>
+			<td style="width:400px">{{swim}}</td>
+		</tr>
+	</tbody>
+</table>
+</hr>
+<p><strong>Das Baden in &ouml;ffentlichen Schwimmb&auml;dern unter Aufsicht der Leiter:innen wird mir ... </strong> {{swimAllowed}}</p>
+<p><strong>Wir beziehen die Frischmilch zum Fr&uuml;hst&uuml;ck oft direkt vom Bauern vor Ort. Diese ist jedoch nicht immer abgekocht, weswegen die Keimfreiheit nicht gew&auml;hrleistet ist. Ich darf ... </strong> {{milk}}</p>
+<p><strong>Folgende besonderen Krankheiten, Allergien, Lebensmittelvertr&auml;glichkeiten, Operationen, Unf&auml;lle, etc. verlangen w&auml;hrend dem Zeltlager in besonderer Weise Vorsicht und R&uuml;cksichtnahme (bitte auch Auflistung von Medikamenten, die w&auml;hrend der Freizeit zu nehmen sind):</strong></br>{{issues}}</p>
+<p><strong>Meine Erziehungsberechtigten sind während dem Zeltlager unter obiger Anschrift zu erreichen:</strong> {{alternativeAddress}}</p>
+
+<p><strong>Das w&auml;re mir noch ein Anliegen:</strong> {{sonst}}</p>
+
+<ul style="margin-top: 2em;" class="default">
+	<li>F&uuml;r die Dauer der Freizeit wird das Erziehungsrecht und die Aufsichtspflicht den Leiter*innen &uuml;bertragen.</li>
+	<li>Meine Erziehungsberechtigten erlauben dem Zeltlager Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu ver&ouml;ffentlichen.</li>
+	<li>Meine Erziehungsberechtigten erlauben, dass mir in Notf&auml;llen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden d&uuml;rfen versorgt und Zecken mithilfe einer Zeckenzange entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht.</li>
+	<li>Meine Erziehungsberechtigten erlauben, dass ich in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf.</li>
+</ul>
+
+<!--
+<table align="left" border="0" cellpadding="1" cellspacing="1" style="width:1175px" class="default">
+	<tbody>
+		<tr>
+			<td style="width:200px">
+			<strong>Ich ernähre mich ...</strong>
+			</td>
+			<td style="width:400px">{{vegetarian}}</td>
+			<td style="width:200px">
+			<strong>Telefonnummer</strong>
+			</td>
+			<td style="width:400px">{{phone}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table align="left" border="1" cellpadding="1" cellspacing="1" style="width:1175px" class="default">
+
 	<tbody>
 		<tr>
 			<td style="width:300px">
@@ -141,13 +218,26 @@
 			<td style="width:860px">{{sonst}}</td>
 		</tr>
 	</tbody>
-</table>
+</table>-->
 
-<p><br />
-<br />
-Hiermit best&auml;tigen wir, dass die von uns angegebenen Daten auf Richtigkeit &uuml;berpr&uuml;ft wurden!<br />
-<br />
+<p style="margin-top: 4em;">
+Hiermit best&auml;tigen wir, dass die von uns angegebenen Daten auf Richtigkeit &uuml;berpr&uuml;ft wurden und melden <strong>{{childFirstName}}</strong> verbindlich f&uuml;r das Zeltlager 2023 an!<br />
+<br /><br /><br />
 &nbsp;</p>
 
 <hr />
 <p>Datum, Ort&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Erziehungsberechtigter&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Teilnehmender&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</p>
+
+<style>
+	.default {
+		font-family: sans-serif;
+	}
+
+	table {
+		margin: 1em 0 1em 0;
+	}
+
+	p {
+		font-family: sans-serif;
+	}
+</style>

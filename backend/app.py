@@ -17,19 +17,20 @@ app = Flask(__name__)
 CORS(app, origins="*")
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
-mongoClient = MongoClient(mongodb_connection_string)
-db = mongoClient.lageranmeldungen
-print("Connected to database")
+#mongoClient = MongoClient(mongodb_connection_string)
+#db = mongoClient.lageranmeldungen
+#print("Connected to database")
 
 @app.route('/registration', methods=['POST'])
 @cross_origin()
 def add_registration():
     data = request.get_json()
-    collection = db["registrations"]
-    result = collection.insert_one(data)
+    #collection = db["registrations"]
+    #result = collection.insert_one(data)
     print(data)
-    print(send_Mail(data, create_pdf(data)))
-    return 'New registration added to database: ' + str(result.inserted_id)
+    pdf = create_pdf(data)
+    #print(send_Mail(data, create_pdf(data)))
+    #return 'New registration added to database: ' + str(result.inserted_id)
 
 def create_pdf(data):
     template_loader=jinja2.FileSystemLoader('./')
