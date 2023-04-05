@@ -3,13 +3,14 @@ import os
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
-import email, smtplib, ssl
+import smtplib, ssl
+import jinja2
+import pdfkit
 from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import jinja2
-import pdfkit
+
 
 load_dotenv()
 
@@ -17,32 +18,86 @@ app = Flask(__name__)
 CORS(app, origins="*")
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
-#mongoClient = MongoClient(mongodb_connection_string)
-#db = mongoClient.lageranmeldungen
-#print("Connected to database")
+mongoClient = MongoClient(mongodb_connection_string)
+db = mongoClient.lageranmeldungen
+print("Connected to database")
 
 @app.route('/registration', methods=['POST'])
 @cross_origin()
 def add_registration():
     data = request.get_json()
-    #collection = db["registrations"]
-    #result = collection.insert_one(data)
-    print(data)
-    pdf = create_pdf(data)
-    #print(send_Mail(data, create_pdf(data)))
-    #return 'New registration added to database: ' + str(result.inserted_id)
+    collection = db["registrations"]
+    result = collection.insert_one(data)
+    data, pdfFilename = parseData(data)
+    print(send_Mail(data, create_pdf(data, pdfFilename)))
+    return 'New registration added to database: ' + str(result.inserted_id)
 
-def create_pdf(data):
-    template_loader=jinja2.FileSystemLoader('./')
-    template_env=jinja2.Environment(loader=template_loader)
+def parseData(data):
+    if(data["tetanus"] == "1"):
+        data["tetanus"] = "bin ich geimpft"
+    else:
+        data["tetanus"] = "bin ich NICHT geimpft"
+
+    if(data["swim"] == "1"):
+        data["swim"] = "schwimmen"
+    else:
+        data["swim"] = "NICHT schwimmen"
+    
+    if(data["swimAllowed"] == "1"):
+       data["swimAllowed"] = "erlaubt"
+    else:
+        data["swimAllowed"] = "NICHT erlaubt"
+
+    if(data["milk"] == "1"):
+        data["milk"] = "ungekochte, frische Milch trinken."
+    else:
+        data["milk"] = "KEINE ungekochte, frische Milch trinken."
+    
+    if(data["availability"] == "1"):
+        data["availability"] = "unter obiger Anschrift zu erreichen."
+    elif(data["availability"] == "2"):
+        data["availability"] = "im Urlaub unter folgender Anschrift zu erreichen:"
+    elif(data["availability"] == "3"):
+        data["availability"] = "nicht zu erreichen, folgende Personen k&ouml;nnen als Kontaktpersonen angesprochen werden:"
+
+    pdfFilename = "Anmeldebestaetigung_" + data["childFirstName"] + data["childLastName"] + ".pdf"
+    pdfFilename = pdfFilename.replace("ü", "ue")
+    pdfFilename = pdfFilename.replace("Ü", "Ue")
+    pdfFilename = pdfFilename.replace("ä", "ae")
+    pdfFilename = pdfFilename.replace("Ä", "Ae")
+    pdfFilename = pdfFilename.replace("ö", "oe")
+    pdfFilename = pdfFilename.replace("Ö", "Oe")
+    pdfFilename = pdfFilename.replace("ß", "ss")
+
+    for item in data:
+        if not(item == "_id"):
+            data[item] = str(data[item]).replace("ü", "&uuml;")
+            data[item] = str(data[item]).replace("ö", "&ouml;")
+            data[item] = str(data[item]).replace("ä", "&auml;")
+            data[item] = str(data[item]).replace("ß", "&#223;")
+    return data, pdfFilename
+
+def create_pdf(data, pdfFilename):
+    template_loader = jinja2.FileSystemLoader('./')
+    template_env = jinja2.Environment(loader=template_loader)
+    
     #reads template and replaces the placeholder with the given JSON-Data
     template=template_env.get_template('html-template.html')
     output_text=template.render(data)
-    PDFfilename="Anmeldebestaetigung_"+data["childFirstName"]+data["childLastName"]+".pdf"
+    #PDFfilename = "Anmeldebestaetigung_"+data["childFirstName"]+data["childLastName"]+".pdf"
+    
     #set the location of wkhtmltopdf and it generates the pdf
-    config=pdfkit.configuration(wkhtmltopdf='C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe')
-    pdfkit.from_string(output_text, 'pdf/'+PDFfilename, configuration=config)
-    return PDFfilename
+    config  =pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_PATH'))
+    options = {
+        'page-size': 'A4',
+        'margin-top': '2cm',
+        'margin-right': '2cm',
+        'margin-bottom': '2cm',
+        'margin-left': '2cm'
+    }
+
+    pdfkit.from_string(output_text, 'pdf/'+pdfFilename, configuration=config, options=options)
+    return pdfFilename
 
 def send_Mail(data, PDFfilename):
     #Variablen setzen
@@ -61,7 +116,7 @@ def send_Mail(data, PDFfilename):
     <br />
     Viele Gr&uuml;&szlig;e und bis bald!<br />
     Dein Zeltlager</p>
-    """.format(data["childFirstName"],data["childLastName"])
+    """.format(data["childFirstName"], data["childLastName"])
 
     message=MIMEMultipart()
     message["subject"]="Erfolgreiche Anmeldung"
