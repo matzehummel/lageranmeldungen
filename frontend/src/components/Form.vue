@@ -246,7 +246,7 @@
 
   <v-row>
     <v-col class="mx-auto" style="text-align: center;">
-      <v-btn v-if="(validationStatus === 'none') || (validationStatus === 'failed')" color="primary" @click="validateForm(); scrollToTop()">
+      <v-btn mb-4 x-large v-if="(validationStatus === 'none') || (validationStatus === 'failed')" color="primary" @click="validateForm(); scrollToTop()">
         Weiter
       </v-btn>
     </v-col>
@@ -254,12 +254,12 @@
   <v-row class="my-5" v-if="validationStatus === 'successful'">
     <v-col md="8" sm="10" class="mx-auto">
       <h2 style=" color: #495c41;">Weiterer Ablauf</h2>
-        <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt habt, erhältst Du nochmal eine Bestätigungsmail mit den angegebenen Daten.
-          Vor dem Vortreffen erhältst Du die hier angegebenen Daten zur Bestätigung nochmal zugestellt.
-          Die Zusammenfassung Deiner Daten lässt Du von Deinen Eltern unterschreiben und bringst sie zum Vortreffen mit.
+        <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt habt, erhältst Du nochmal eine Bestätigungsmail.
+          In dieser Bestätigungsmail sind Deine angegebenen Daten als PDF angehängt. Drucke das PDF aus, lass' es von Deinen Eltern unterschreiben und
+          bring das unterschriebende Formular zum Vortreffen mit.
           Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen.
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
-        <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
+        <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
           auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
         <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2023 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
@@ -267,7 +267,7 @@
   </v-row>
   <v-row>
     <v-col class="mx-auto" style="text-align: center;">
-      <v-btn v-if="validationStatus === 'successful'" color="primary" @click="confirmRegistration()">
+      <v-btn mb-4 x-large v-if="validationStatus === 'successful'" color="primary" @click="confirmRegistration()">
         Passt alles <v-icon class="mx-2">mdi-thumb-up</v-icon> Anmeldung bestätigen!
       </v-btn>
     </v-col>

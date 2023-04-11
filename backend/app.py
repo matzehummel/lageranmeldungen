@@ -28,8 +28,8 @@ def add_registration():
     data = request.get_json()
     collection = db["registrations"]
     result = collection.insert_one(data)
-    data, pdfFilename = parseData(data)
-    print(send_Mail(data, create_pdf(data, pdfFilename)))
+    data, pdfFilename, childFirstName, childLastName = parseData(data)
+    print(send_Mail(data, create_pdf(data, pdfFilename), childFirstName, childLastName))
     return 'New registration added to database: ' + str(result.inserted_id)
 
 def parseData(data):
@@ -60,7 +60,12 @@ def parseData(data):
     elif(data["availability"] == "3"):
         data["availability"] = "nicht zu erreichen, folgende Personen k&ouml;nnen als Kontaktpersonen angesprochen werden:"
 
+    if(data["sonst"] == ""):
+        data["sonst"] = "-"
+
     pdfFilename = "Anmeldebestaetigung_" + data["childFirstName"] + data["childLastName"] + ".pdf"
+    childFirstName = data["childFirstName"]
+    childLastName = data["childLastName"]
     pdfFilename = pdfFilename.replace("ü", "ue")
     pdfFilename = pdfFilename.replace("Ü", "Ue")
     pdfFilename = pdfFilename.replace("ä", "ae")
@@ -74,8 +79,11 @@ def parseData(data):
             data[item] = str(data[item]).replace("ü", "&uuml;")
             data[item] = str(data[item]).replace("ö", "&ouml;")
             data[item] = str(data[item]).replace("ä", "&auml;")
+            data[item] = str(data[item]).replace("Ü", "&Uuml;")
+            data[item] = str(data[item]).replace("Ö", "&Ouml;")
+            data[item] = str(data[item]).replace("Ä", "&Auml;")
             data[item] = str(data[item]).replace("ß", "&#223;")
-    return data, pdfFilename
+    return data, pdfFilename, childFirstName, childLastName
 
 def create_pdf(data, pdfFilename):
     template_loader = jinja2.FileSystemLoader('./')
@@ -99,7 +107,7 @@ def create_pdf(data, pdfFilename):
     pdfkit.from_string(output_text, 'pdf/'+pdfFilename, configuration=config, options=options)
     return pdfFilename
 
-def send_Mail(data, PDFfilename):
+def send_Mail(data, PDFfilename, childFirstName, childLastName):
     #Variablen setzen
     smtp_server="mx2efc.netcup.net"
     mail_sender="anmeldung@zeltlager-braeunlingen.de"
@@ -108,18 +116,19 @@ def send_Mail(data, PDFfilename):
 
     #HTML-Mailbody erstellen und Variable message anhaengen
     htmlbody="""\
-    <p>Hallo {} {},<br />
+    <p>Hallo {},<br />
     <br />
-    deine Anmeldung hat erfolgreich funktioniert.<br />
-    In der angeh&auml;ngten PDF-Datei findest du deine angegebenen Daten.<br />
-    Bringe bitte das Formular <u><strong>unterschrieben</strong></u> mit ans Vortreffen.<br />
-    <br />
-    Viele Gr&uuml;&szlig;e und bis bald!<br />
-    Dein Zeltlager</p>
-    """.format(data["childFirstName"], data["childLastName"])
+    Hurra! Deine Anmeldung f&uuml; das Zeltlager 2023 hat erfolgreich funktioniert.<br />
+    Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
+    Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
+    Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
+    <br/><br/>
+    Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2023 mit Dir!<br />
+    Deine Leiterrunde</p>
+    """.format(childFirstName)
 
     message=MIMEMultipart()
-    message["subject"]="Erfolgreiche Anmeldung"
+    message["subject"] = "Zeltlager 2023 - Anmeldung von " + childFirstName + " " + childLastName
     message["From"]=mail_sender
     message["To"]=mail_receiver
     messagebody=MIMEText(htmlbody, "html")
@@ -144,7 +153,8 @@ def send_Mail(data, PDFfilename):
         except:
             return 'authentication on mail server failed'
         try:
-            server.sendmail(mail_sender,mail_receiver,message.as_string())
+            server.sendmail(mail_sender, mail_receiver, message.as_string())
+            server.sendmail(mail_sender, mail_sender, message.as_string())
         except:
             return 'mail was not sent, but authentication was successful'
     return 'Mail Sent!'
