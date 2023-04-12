@@ -15,12 +15,17 @@ from email.mime.multipart import MIMEMultipart
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, origins="*")
+CORS(app, resources = {r"/*": { "origins": "*" }})
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
 mongoClient = MongoClient(mongodb_connection_string)
 db = mongoClient.lageranmeldungen
 print("Connected to database")
+
+@app.route('/index')
+@cross_origin()
+def index():
+    return "POST /registration"
 
 @app.route('/registration', methods=['POST'])
 @cross_origin()
@@ -118,7 +123,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName):
     htmlbody="""\
     <p>Hallo {},<br />
     <br />
-    Hurra! Deine Anmeldung f&uuml; das Zeltlager 2023 hat erfolgreich funktioniert.<br />
+    Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2023 hat erfolgreich funktioniert.<br />
     Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
     Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
     Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
