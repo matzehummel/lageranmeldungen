@@ -388,7 +388,7 @@ import axios from 'axios'
       },
       async sendData() {
         
-        axios.post('http://localhost:5000/registration', {
+        axios.post('http://45.157.177.211:5000/registration', {
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
           parentsLastName: this.parentsLastName,
