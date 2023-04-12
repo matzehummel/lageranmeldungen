@@ -381,14 +381,14 @@ import axios from 'axios'
         if(valid) {
           const response = await this.sendData();
           console.log(response);
-          //window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
+          window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
         } else {
           this.scrollToTop()
         }
       },
       async sendData() {
         
-        axios.post('http://45.157.177.211:5000/registration', {
+        axios.post('https://backend.zeltlager-braeunlingen.de/registration', {
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
           parentsLastName: this.parentsLastName,
