@@ -16,7 +16,7 @@
             <v-card-text style="color: white;"><v-icon class="mx-2" style="color: white;">mdi-check-circle</v-icon>
               Das sieht doch schonmal super aus! Schau Dir nochmal alles an, ob das so passt.</v-card-text>
           </v-card>
-          <p style="text-align: left;">Felder, die mit * gekennzeichnet sind müssen ausgefüllt werden.</p>
+          <p style="text-align: left;">Felder, die mit * gekennzeichnet sind, müssen ausgefüllt werden.</p>
           <v-row class="text-center">
             <v-col
               cols="12"
@@ -84,13 +84,44 @@
                     :rules="birthdayRules"
                   ></v-text-field>
                 </template>
-                <v-date-picker v-model="birthday" no-title scrollable locale="de" required>
+                <v-date-picker
+                  ref="picker"
+                  max="2014-08-01"
+                  min="2009-01-01"
+                  @change="save"
+                ></v-date-picker>
+                <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                   <v-btn text color="primary" @click="$refs.menu.save(birthday)">OK</v-btn>
-                </v-date-picker>
+                </v-date-picker>-->
               </v-menu>
             </v-col>
+            
+            <!--<v-col cols="12" md="1" xs="3">
+              <v-text-field
+                v-model="day"
+                :rules="dayRules"
+                label="TT *"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="1" xs="3">
+              <v-text-field
+                v-model="month"
+                :rules="monthRules"
+                label="MM *"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="2" xs="6">
+              <v-text-field
+                v-model="year"
+                :rules="yearRules"
+                label="JJJJ *"
+                required
+              ></v-text-field>
+            </v-col>-->
 
             <v-col cols="12" md="6" xs="12">
               <v-text-field
@@ -203,13 +234,13 @@
               </v-radio-group>
             </v-col>
             <v-col cols="12" md="12" xs="12">
-              <p style="text-align:left">Folgende besonderen Krankheiten, Allergien, Lebensmittelverträglichkeiten, Operationen, Unfälle, etc. verlangen während dem Zeltlager in besonderer Weise Vorsicht und Rücksichtnahme (bitte auch Auflistung von Medikamenten, die während der Freizeit zu nehmen sind):</p>
+              <p style="text-align:left">Folgende besonderen Krankheiten, Allergien, Lebensmittelunverträglichkeiten, Operationen, Unfälle, etc. verlangen während des Zeltlagers in besonderer Weise Vorsicht und Rücksichtnahme (bitte auch Auflistung von Medikamenten, die während der Freizeit zu nehmen sind):</p>
               <v-textarea background-color="accent"
                   v-model="issues"
                 ></v-textarea>
             </v-col>
             <v-col cols="12" md="9" xs="12">
-              <v-radio-group label="Meine Erziehungsberechtigten sind während dem Zeltlager"
+              <v-radio-group label="Meine Erziehungsberechtigten sind während des Zeltlagers"
                   required v-model="availability">
                 <v-radio label="unter obiger Anschrift zu erreichen" value="1"></v-radio>
                 <v-radio label="im Urlaub unter folgender Anschrift zu erreichen:" value="2"></v-radio>
@@ -309,7 +340,29 @@ import axios from 'axios'
             return true 
           },
         ],
-        
+        day: '',
+        dayRules: [
+          value => { 
+            if ((value > 0) && (value < 32)) return true
+            return 'Bitte gültigen Tag (1-31) angeben'
+          }
+        ],
+        month: '',
+        monthRules: [
+          value => { 
+            if ((value > 0) && (value < 13)) return true
+            return 'Bitte gültigen Monat (1-12) angeben'
+          }
+        ],
+        year: '',
+        yearRules: [
+          value => { 
+            if ((value > 2013)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
+            if ((value < 2009) && (value > 2006)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
+            if ((value < 2014) && (value > 2008)) return true
+            return 'Bitte gültiges Jahr (2009-2013) angeben'
+          }
+        ],
         email: '',
         emailRules: [
           value => {
@@ -349,9 +402,9 @@ import axios from 'axios'
         sonst: "",
 
         checkboxTextAufsicht: "Für die Dauer der Freizeit wird das Erziehungsrecht und die Aufsichtspflicht den Leiter*innen übertragen. *",
-        checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
-        checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken mithilfe einer Zeckenzange entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
-        checkboxTextPKW: "Meine Erziehungsberechtigten erlauben, dass ich in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf. *",
+        checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager, Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
+        checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
+        checkboxTextPKW: "Meine Erziehungsberechtigten erlauben, dass ich ggf. (z.B. Weg zum Arzt) in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf. *",
         checkboxRule: [
           value => {
             if(value) return true
@@ -361,7 +414,15 @@ import axios from 'axios'
       }
     },
 
+    watch: {
+      menu (val) {
+        val && setTimeout(() => (this.$refs.picker.activePicker = 'YEAR'))
+      },
+    },
     methods: {
+      save (birthday) {
+        this.$refs.menu.save(birthday)
+      },
       async validateForm() {
         const result = await this.$refs.signupForm.validate()
         console.log(result);
