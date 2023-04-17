@@ -139,6 +139,7 @@ def parseData(data):
             data[item] = str(data[item]).replace("Ö", "&Ouml;")
             data[item] = str(data[item]).replace("Ä", "&Auml;")
             data[item] = str(data[item]).replace("ß", "&#223;")
+            data[item] = str(data[item]).replace("\n", "<br>")
     return data, pdfFilename, childFirstName, childLastName
 
 def create_pdf(data, pdfFilename, type):
