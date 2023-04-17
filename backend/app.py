@@ -32,8 +32,8 @@ def index():
 def add_registration_xxl():
     data = request.get_json()
     collection = db["registrations"]
-    result = collection.insert_one(parseDataForDb(data))
-    data, pdfFilename, childFirstName, childLastName = parseData(data, "kinderlager")
+    result = collection.insert_one(parseDataForDb(data, "kinderlager"))
+    data, pdfFilename, childFirstName, childLastName = parseData(data)
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
     print(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
@@ -43,10 +43,9 @@ def add_registration_xxl():
 def add_registration():
     data = request.get_json()
     collection = db["registrations_xxl"]
-    dbData = parseDataForDb(data)
-    print(dbData)
+    dbData = parseDataForDb(data, "xxl")
     result = collection.insert_one(dbData)
-    data, pdfFilename, childFirstName, childLastName = parseData(data, "xxl")
+    data, pdfFilename, childFirstName, childLastName = parseData(data)
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
     print(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
