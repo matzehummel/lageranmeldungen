@@ -475,7 +475,7 @@ import axios from 'axios'
           birthday: this.birthday,
           email: this.email,
           phone: this.phone,
-          alternativePhone: this.alternativePhone,
+          phoneAlternative: this.phoneAlternative,
           address: this.address,
           plz: this.plz,
           city: this.city,
