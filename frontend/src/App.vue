@@ -3,7 +3,7 @@
     <v-app-bar app color="#ddd6c4" >
       <!-- Adjust the height to your needs, mine is 40 -->
       <img :src="require('./assets/logo.png')" height="50"/>
-      <v-spacer></v-spacer>
+      <v-spacer><h3 style="text-align: right;">Anmeldung Kinderlager</h3></v-spacer>
     </v-app-bar>
     <!--<v-app-bar
       app

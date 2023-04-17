@@ -27,15 +27,60 @@ print("Connected to database")
 def index():
     return "POST /registration"
 
-@app.route('/registration', methods=['POST'])
+@app.route('/registration/kinderlager', methods=['POST'])
+@cross_origin()
+def add_registration_xxl():
+    data = request.get_json()
+    collection = db["registrations"]
+    result = collection.insert_one(parseDataForDb(data))
+    data, pdfFilename, childFirstName, childLastName = parseData(data)
+    send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
+    print(send_mail_result)
+    return 'New registration added to database: ' + str(result.inserted_id)
+
+@app.route('/registration/xxl', methods=['POST'])
 @cross_origin()
 def add_registration():
     data = request.get_json()
-    collection = db["registrations"]
-    result = collection.insert_one(data)
+    collection = db["registrations_xxl"]
+    dbData = parseDataForDb(data)
+    print(dbData)
+    result = collection.insert_one(dbData)
     data, pdfFilename, childFirstName, childLastName = parseData(data)
-    print(send_Mail(data, create_pdf(data, pdfFilename), childFirstName, childLastName))
+    send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
+    print(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
+
+def parseDataForDb(data):
+    dbData = {}
+    for item in data:
+        dbData[item] = data[item].replace("ü", "ue")
+        dbData[item] = dbData[item].replace("ö", "oe")
+        dbData[item] = dbData[item].replace("ä", "ae")
+        dbData[item] = dbData[item].replace("Ü", "Ue")
+        dbData[item] = dbData[item].replace("Ö", "Oe")
+        dbData[item] = dbData[item].replace("Ä", "Ae")
+        dbData[item] = dbData[item].replace("ß", "ss")
+        dbData[item] = dbData[item].replace("\n", " ")
+        dbData[item] = dbData[item].replace("\r", " ")
+        dbData[item] = dbData[item].replace(",", ";")
+
+    dbData["experienceKinderlager"] = {
+        "nie dabei": 0,
+        "1 mal dabei": 1,
+        "2 mal dabei": 2,
+        "3 mal dabei": 3,
+        "4 mal dabei": 4
+    }.get(dbData["experienceKinderlager"], "undef")
+
+    dbData["experienceXXL"] = {
+        "noch nie dabei": 0,
+        "1 mal dabei": 1,
+        "2 mal dabei": 2
+    }.get(dbData["experienceXXL"], "undef")
+
+    return dbData
+
 
 def parseData(data):
     if(data["tetanus"] == "1"):
@@ -90,12 +135,15 @@ def parseData(data):
             data[item] = str(data[item]).replace("ß", "&#223;")
     return data, pdfFilename, childFirstName, childLastName
 
-def create_pdf(data, pdfFilename):
+def create_pdf(data, pdfFilename, type):
     template_loader = jinja2.FileSystemLoader('./')
     template_env = jinja2.Environment(loader=template_loader)
     
     #reads template and replaces the placeholder with the given JSON-Data
-    template=template_env.get_template('html-template.html')
+    if(type == "xxl"):
+        template=template_env.get_template('html-template-xxl.html')
+    elif(type == "kinderlager"):    
+        template=template_env.get_template('html-template.html')
     output_text=template.render(data)
     #PDFfilename = "Anmeldebestaetigung_"+data["childFirstName"]+data["childLastName"]+".pdf"
     
@@ -112,28 +160,43 @@ def create_pdf(data, pdfFilename):
     pdfkit.from_string(output_text, 'pdf/'+pdfFilename, configuration=config, options=options)
     return pdfFilename
 
-def send_Mail(data, PDFfilename, childFirstName, childLastName):
+def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
     #Variablen setzen
     smtp_server="mx2efc.netcup.net"
     mail_sender="anmeldung@zeltlager-braeunlingen.de"
     mail_receiver = data["email"]
     password = os.environ.get('EMAIL_PASSWORD')
 
-    #HTML-Mailbody erstellen und Variable message anhaengen
-    htmlbody="""\
-    <p>Hallo {},<br />
-    <br />
-    Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2023 hat erfolgreich funktioniert.<br />
-    Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-    Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
-    Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
-    <br/><br/>
-    Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2023 mit Dir!<br />
-    Deine Leiterrunde</p>
-    """.format(childFirstName)
-
     message=MIMEMultipart()
-    message["subject"] = "Zeltlager 2023 - Anmeldung von " + childFirstName + " " + childLastName
+    #HTML-Mailbody erstellen und Variable message anhaengen
+    if(type == "kinderlager"):
+        htmlbody="""\
+        <p>Hallo {},<br />
+        <br />
+        Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2023 hat erfolgreich funktioniert.<br />
+        Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
+        Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
+        <br/><br/>
+        Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2023 mit Dir!<br />
+        Deine Leiterrunde</p>
+        """.format(childFirstName)
+        message["subject"] = "Zeltlager 2023 - Anmeldung von " + childFirstName + " " + childLastName
+    elif(type == "xxl"):
+        htmlbody="""\
+        <p>Hallo {},<br />
+        <br />
+        Hurra! Deine Anmeldung f&uuml;r das XXL-Lager 2023 hat erfolgreich funktioniert.<br />
+        Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
+        Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei Lagerleiter Christian in Döggingen einwerfen.
+        <br/><br/>
+        Wir freuen uns schon auf ein wundersch&ouml;nes XXL 2023 mit Dir!<br />
+        Deine XXL-Leiterrunde</p>
+        """.format(childFirstName)
+        message["subject"] = "XXL 2023 - Anmeldung von " + childFirstName + " " + childLastName
+   
+    
     message["From"]=mail_sender
     message["To"]=mail_receiver
     messagebody=MIMEText(htmlbody, "html")

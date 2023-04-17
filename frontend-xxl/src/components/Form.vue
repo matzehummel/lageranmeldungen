@@ -86,7 +86,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="birthday"
-                    label="Geburtstag des Kindes *"
+                    label="Geburtstag des/der Teilnehmenden *"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2014-08-01"
-                  min="2009-01-01"
+                  max="2009-12-31"
+                  min="2006-01-01"
                   @change="save"
                 ></v-date-picker>
                 <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
@@ -106,31 +106,6 @@
                 </v-date-picker>-->
               </v-menu>
             </v-col>
-            
-            <!--<v-col cols="12" md="1" xs="3">
-              <v-text-field
-                v-model="day"
-                :rules="dayRules"
-                label="TT *"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="1" xs="3">
-              <v-text-field
-                v-model="month"
-                :rules="monthRules"
-                label="MM *"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="2" xs="6">
-              <v-text-field
-                v-model="year"
-                :rules="yearRules"
-                label="JJJJ *"
-                required
-              ></v-text-field>
-            </v-col>-->
 
             <v-col cols="12" md="6" xs="12">
               <v-text-field
@@ -184,7 +159,7 @@
                 ></v-text-field>
             </v-col>
 
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" md="12" xs="12">
               <v-select
                   v-model="memberOf"
                   label="Ich bin Mitglied bei ... *"
@@ -196,20 +171,23 @@
 
             <v-col cols="12" md="6" xs="12">
               <v-select
-                  v-model="experience"
-                  label="Ich war ... *"
-                  :items="['schon einmal auf dem Zeltlager dabei', 'noch nie dabei']"
+                  v-model="experienceKinderlager"
+                  label="Auf dem Kinderlager war ich ... *"
+                  :items="['nie dabei', '1 mal dabei', '2 mal dabei', '3 mal dabei', '4 mal dabei']"
+                  required
+                  :rules="selectRules"
+                ></v-select>
+            </v-col>
+            <v-col>
+              <v-select
+                  v-model="experienceXXL"
+                  label="Auf dem XXL war ich ... *"
+                  :items="['noch nie dabei', '1 mal dabei', '2 mal dabei']"
                   required
                   :rules="selectRules"
                 ></v-select>
             </v-col>
 
-            <v-col cols="12" md="12" xs="12">
-              <v-text-field
-                  v-model="supervisors"
-                  label="Meine Gruppenleiter:innen sind ..."
-                ></v-text-field>
-            </v-col>
             <v-col cols="12" md="6" xs="12">
               <v-text-field
                   v-model="insurance"
@@ -351,33 +329,10 @@ import axios from 'axios'
         birthday: new Date().toISOString().substring(0,10),
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2013-07-01")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
-            if (new Date(value) < new Date("2009-07-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
+            if (new Date(value) > new Date("2010-01-01")) return 'Du bist vielleicht noch etwas zu jung für\'s XXL. Wie wär\'s mit dem Kinderlager? :)'
+            if (new Date(value) < new Date("2006-01-01")) return 'Du bist ja schon über 17! Magst du vielleicht als Leiter mitkommen? :)'
             return true 
           },
-        ],
-        day: '',
-        dayRules: [
-          value => { 
-            if ((value > 0) && (value < 32)) return true
-            return 'Bitte gültigen Tag (1-31) angeben'
-          }
-        ],
-        month: '',
-        monthRules: [
-          value => { 
-            if ((value > 0) && (value < 13)) return true
-            return 'Bitte gültigen Monat (1-12) angeben'
-          }
-        ],
-        year: '',
-        yearRules: [
-          value => { 
-            if ((value > 2013)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
-            if ((value < 2009) && (value > 2006)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
-            if ((value < 2014) && (value > 2008)) return true
-            return 'Bitte gültiges Jahr (2009-2013) angeben'
-          }
         ],
         email: '',
         emailRules: [
@@ -398,14 +353,14 @@ import axios from 'axios'
         city: '',
 
         memberOf: '',
-        experience: '',
+        experienceKinderlager: '',
+        experienceXXL: '',
         selectRules: [
           value => {
             if (value) return true
             return 'Bitte auswählen.'
           },
         ],
-        supervisors: "",
         
         insurance: "",
         tetanus: "1",
@@ -466,7 +421,9 @@ import axios from 'axios'
       },
       async sendData() {
         
-        axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        const endpoint = "/registration/xxl";
+        //axios.post('https://backend.zeltlager-braeunlingen.de/registration/xxl', {
+        axios.post('http://localhost:5000' + endpoint, {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
@@ -480,7 +437,8 @@ import axios from 'axios'
           plz: this.plz,
           city: this.city,
           memberOf: this.memberOf,
-          experience: this.experience,
+          experienceKinderlager: this.experienceKinderlager,
+          experienceXXL: this.experienceXXL,
           supervisors: this.supervisors,
           insurance: this.insurance,
           tetanus: this.tetanus,

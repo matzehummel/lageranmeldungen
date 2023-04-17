@@ -1,7 +1,8 @@
 # Initial setup frontend
 ```npm install -g @vue/cli
 vue create frontend
-vue add vuetify```
+vue add vuetify
+```
 
 # Setup frontend after cloning
 
