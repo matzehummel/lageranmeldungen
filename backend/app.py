@@ -51,7 +51,7 @@ def add_registration():
     print(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
 
-def parseDataForDb(data):
+def parseDataForDb(data, type):
     dbData = {}
     for item in data:
         dbData[item] = data[item].replace("ü", "ue")
@@ -65,19 +65,26 @@ def parseDataForDb(data):
         dbData[item] = dbData[item].replace("\r", " ")
         dbData[item] = dbData[item].replace(",", ";")
 
-    dbData["experienceKinderlager"] = {
-        "nie dabei": 0,
-        "1 mal dabei": 1,
-        "2 mal dabei": 2,
-        "3 mal dabei": 3,
-        "4 mal dabei": 4
-    }.get(dbData["experienceKinderlager"], "undef")
+    if(type == "xxl"):
+        dbData["experienceKinderlager"] = {
+            "nie dabei": 0,
+            "1 mal dabei": 1,
+            "2 mal dabei": 2,
+            "3 mal dabei": 3,
+            "4 mal dabei": 4
+        }.get(dbData["experienceKinderlager"], "undef")
 
-    dbData["experienceXXL"] = {
-        "noch nie dabei": 0,
-        "1 mal dabei": 1,
-        "2 mal dabei": 2
-    }.get(dbData["experienceXXL"], "undef")
+        dbData["experienceXXL"] = {
+            "noch nie dabei": 0,
+            "1 mal dabei": 1,
+            "2 mal dabei": 2
+        }.get(dbData["experienceXXL"], "undef")
+    
+    elif(type == "kinderlager"):
+        dbData["experience"] = {
+            "schon einmal auf dem Zeltlager dabei": 1,
+            "noch nie dabei": 0
+        }.get(dbData["experience"], "undef")
 
     return dbData
 
