@@ -29,10 +29,10 @@ def index():
 
 @app.route('/registration/kinderlager', methods=['POST'])
 @cross_origin()
-def add_registration_xxl():
+def add_registration():
     data = request.get_json()
     collection = db["registrations"]
-    result = collection.insert_one(parseDataForDb(data, "kinderlager"))
+    result = collection.insert_one(parseDataForDb(data, type="kinderlager"))
     data, pdfFilename, childFirstName, childLastName = parseData(data)
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
     print(send_mail_result)
@@ -40,10 +40,10 @@ def add_registration_xxl():
 
 @app.route('/registration/xxl', methods=['POST'])
 @cross_origin()
-def add_registration():
+def add_registration_xxl():
     data = request.get_json()
     collection = db["registrations_xxl"]
-    dbData = parseDataForDb(data, "xxl")
+    dbData = parseDataForDb(data, type="xxl")
     result = collection.insert_one(dbData)
     data, pdfFilename, childFirstName, childLastName = parseData(data)
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
