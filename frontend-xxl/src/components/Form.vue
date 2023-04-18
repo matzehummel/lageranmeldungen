@@ -422,7 +422,7 @@ import axios from 'axios'
       async sendData() {
         
         const endpoint = "/registration/xxl";
-        axios.post('https://backend.zeltlager-braeunlingen.de/registration/xxl', {
+        axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
         //axios.post('http://localhost:5000' + endpoint, {
           sexe: this.sexe,
           childLastName: this.childLastName,
