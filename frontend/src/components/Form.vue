@@ -301,9 +301,9 @@
   <v-row class="my-5" v-if="validationStatus === 'successful'">
     <v-col md="8" sm="10" class="mx-auto">
       <h2 style=" color: #495c41;">Weiterer Ablauf</h2>
-        <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt habt, erhältst Du nochmal eine Bestätigungsmail.
-          In dieser Bestätigungsmail sind Deine angegebenen Daten als PDF angehängt. Drucke das PDF aus, lass' es von Deinen Eltern unterschreiben und
-          bring das unterschriebende Formular zum Vortreffen mit.
+        <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt hast, erhältst Du nochmal eine Bestätigungsmail.
+          In dieser Bestätigungsmail sind Deine angegebenen Daten als PDF angehängt. Drucke das PDF aus, lass es von Deinen Eltern unterschreiben und
+          bring das unterschriebene Formular zum Vortreffen mit.
           Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen.
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
         <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
@@ -314,7 +314,7 @@
   </v-row>
   <v-row>
     <v-col class="mx-auto" style="text-align: center;">
-      <v-btn mb-4 x-large v-if="validationStatus === 'successful'" color="primary" @click="confirmRegistration()">
+      <v-btn v-if="validationStatus === 'successful'" mb-4 x-large  color="primary" @click="confirmRegistration()" :disabled="confirmButtonDisabled">
         Passt alles <v-icon class="mx-2">mdi-thumb-up</v-icon> Anmeldung bestätigen!
       </v-btn>
     </v-col>
@@ -427,7 +427,9 @@ import axios from 'axios'
             if(value) return true
             return 'Für die Anmeldung ist eine Zustimmung erforderlich.'
           }
-        ]
+        ],
+
+        confirmButtonDisabled: false
       }
     },
 
@@ -457,16 +459,20 @@ import axios from 'axios'
       async confirmRegistration() {
         const valid = await this.validateForm();
         if(valid) {
+          this.confirmButtonDisabled = true;
           const response = await this.sendData();
           console.log(response);
           window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
         } else {
+          this.confirmButtonDisabled = false;
           this.scrollToTop()
         }
       },
       async sendData() {
         
-        axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        
+        await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        //await axios.post('http://localhost:5000/registration/kinderlager', {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
