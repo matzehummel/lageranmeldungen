@@ -180,28 +180,28 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         htmlbody="""\
         <p>Hallo {},<br />
         <br />
-        Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2023 hat erfolgreich funktioniert.<br />
+        Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2024 hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
         Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
         Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
         <br/><br/>
-        Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2023 mit Dir!<br />
+        Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2024 mit Dir!<br />
         Deine Leiterrunde</p>
         """.format(childFirstName)
-        message["subject"] = "Zeltlager 2023 - Anmeldung von " + childFirstName + " " + childLastName
+        message["subject"] = "Zeltlager 2024 - Anmeldung von " + childFirstName + " " + childLastName
     elif(type == "xxl"):
         htmlbody="""\
         <p>Hallo {},<br />
         <br />
-        Hurra! Deine Anmeldung f&uuml;r das XXL-Lager 2023 hat erfolgreich funktioniert.<br />
+        Hurra! Deine Anmeldung f&uuml;r das XXL-Lager 2024 hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
         Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
         Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei Lagerleiter Christian in Döggingen einwerfen.
         <br/><br/>
-        Wir freuen uns schon auf ein wundersch&ouml;nes XXL 2023 mit Dir!<br />
+        Wir freuen uns schon auf ein wundersch&ouml;nes XXL 2024 mit Dir!<br />
         Deine XXL-Leiterrunde</p>
         """.format(childFirstName)
-        message["subject"] = "XXL 2023 - Anmeldung von " + childFirstName + " " + childLastName
+        message["subject"] = "XXL 2024 - Anmeldung von " + childFirstName + " " + childLastName
    
     
     message["From"]=mail_sender

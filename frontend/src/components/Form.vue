@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's Zeltlager 2023!</h1></v-col>
+      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's Zeltlager 2024!</h1></v-col>
     </v-row>
     <v-form ref="signupForm">
       <v-row>
@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2014-08-01"
-                  min="2009-01-01"
+                  max="2015-08-01"
+                  min="2010-01-01"
                   @change="save"
                 ></v-date-picker>
                 <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
@@ -210,7 +210,7 @@
                   label="Meine Gruppenleiter:innen sind ..."
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" md="4" xs="12">
               <v-text-field
                   v-model="insurance"
                   label="Ich bin krankenversichert bei ... *"
@@ -218,7 +218,15 @@
                   :rules="nameRules"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" md="5" xs="12">
+              <v-text-field
+                  v-model="doctor"
+                  label="Mein Hausarzt ... *"
+                  required
+                  :rules="nameRules"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" xs="12">
               <v-radio-group label="Gegen Tetanus ..." required v-model="tetanus">
                 <v-radio label="bin ich geimpft" value="1"></v-radio>
                 <v-radio label="bin ich NICHT geimpft" value="0"></v-radio>
@@ -285,6 +293,9 @@
             <v-col cols="12" md="12" xs="12">
               <v-checkbox :label=checkboxTextPKW required :rules="checkboxRule"></v-checkbox>
             </v-col>
+            <v-col cols="12" md="12" xs="12">
+              <v-checkbox :label=checkboxTextBiwak required :rules="checkboxRule"></v-checkbox>
+            </v-col>
         </v-row>
         
       </v-col>
@@ -303,13 +314,14 @@
       <h2 style=" color: #495c41;">Weiterer Ablauf</h2>
         <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt hast, erhältst Du nochmal eine Bestätigungsmail.
           In dieser Bestätigungsmail sind Deine angegebenen Daten als PDF angehängt. Drucke das PDF aus, lass es von Deinen Eltern unterschreiben und
-          bring das unterschriebene Formular zum Vortreffen mit.
-          Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen.
+          <!-- bring das unterschriebene Formular zum Vortreffen mit. -->
+          wirf das unterschriebene Formular in den Briefkasten des Pfarrbüros (Hüfingerstr. 2, 78199 Bräunlingen).
+          <!-- Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen. -->
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
         <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
           auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2023 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
   <v-row>
@@ -351,8 +363,8 @@ import axios from 'axios'
         birthday: new Date().toISOString().substring(0,10),
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2013-07-01")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
-            if (new Date(value) < new Date("2009-07-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
+            if (new Date(value) > new Date("2015-07-31")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
+            if (new Date(value) < new Date("2010-01-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
             return true 
           },
         ],
@@ -373,8 +385,8 @@ import axios from 'axios'
         year: '',
         yearRules: [
           value => { 
-            if ((value > 2013)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
-            if ((value < 2009) && (value > 2006)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
+            if ((value > 2014)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
+            if ((value < 2010) && (value > 2007)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
             if ((value < 2014) && (value > 2008)) return true
             return 'Bitte gültiges Jahr (2009-2013) angeben'
           }
@@ -408,6 +420,7 @@ import axios from 'axios'
         supervisors: "",
         
         insurance: "",
+        doctor: "",
         tetanus: "1",
         swim: "1",
         swimAllowed: "1",
@@ -422,6 +435,7 @@ import axios from 'axios'
         checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager, Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
         checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
         checkboxTextPKW: "Meine Erziehungsberechtigten erlauben, dass ich ggf. (z.B. Weg zum Arzt) in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf. *",
+        checkboxTextBiwak: "Meine Erziehungsberechtigten erlauben, dass die Aufsichtspflicht für die Zeit des Biwaks (Übernachtung im Freien) den entsrprechenden Gruppenleiter*innen übertragen wird. Diese sind ggf. noch nicht volljährig.*",
         checkboxRule: [
           value => {
             if(value) return true
@@ -471,8 +485,8 @@ import axios from 'axios'
       async sendData() {
         
         
-        await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
-        //await axios.post('http://localhost:5000/registration/kinderlager', {
+        // await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        await axios.post('http://localhost:5000/registration/kinderlager', {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
@@ -489,6 +503,7 @@ import axios from 'axios'
           experience: this.experience,
           supervisors: this.supervisors,
           insurance: this.insurance,
+          doctor: this.doctor,
           tetanus: this.tetanus,
           swim: this.swim,
           swimAllowed: this.swimAllowed,

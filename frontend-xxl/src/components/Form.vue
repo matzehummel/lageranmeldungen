@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's Zeltlager 2023!</h1></v-col>
+      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's XXL-Lager 2024!</h1></v-col>
     </v-row>
     <v-form ref="signupForm">
       <v-row>
@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2009-12-31"
-                  min="2006-01-01"
+                  max="2010-12-31"
+                  min="2007-01-01"
                   @change="save"
                 ></v-date-picker>
                 <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
@@ -178,7 +178,7 @@
                   :rules="selectRules"
                 ></v-select>
             </v-col>
-            <v-col>
+            <v-col cols="12" md="6" xs="12">
               <v-select
                   v-model="experienceXXL"
                   label="Auf dem XXL war ich ... *"
@@ -188,7 +188,7 @@
                 ></v-select>
             </v-col>
 
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" md="4" xs="12">
               <v-text-field
                   v-model="insurance"
                   label="Ich bin krankenversichert bei ... *"
@@ -196,7 +196,15 @@
                   :rules="nameRules"
                 ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" xs="12">
+            <v-col cols="12" md="5" xs="12">
+              <v-text-field
+                  v-model="doctor"
+                  label="Mein Hausarzt ... *"
+                  required
+                  :rules="nameRules"
+                ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="3" xs="12">
               <v-radio-group label="Gegen Tetanus ..." required v-model="tetanus">
                 <v-radio label="bin ich geimpft" value="1"></v-radio>
                 <v-radio label="bin ich NICHT geimpft" value="0"></v-radio>
@@ -281,13 +289,14 @@
       <h2 style=" color: #495c41;">Weiterer Ablauf</h2>
         <p style="text-align: left;">Nachdem Du Deine Brieftaube mit der Anmeldung zu uns losgeschickt hast, erhältst Du nochmal eine Bestätigungsmail.
           In dieser Bestätigungsmail sind Deine angegebenen Daten als PDF angehängt. Drucke das PDF aus, lass es von Deinen Eltern unterschreiben und
-          bring das unterschriebene Formular zum Vortreffen mit.
-          Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen.
+          <!-- bring das unterschriebene Formular zum Vortreffen mit. -->
+          wirf das unterschriebene Formular in den Briefkasten des Pfarrbüros in Bräunlingen (Hüfingerstr. 2).
+          <!-- Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen. -->
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
         <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
           auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2023 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
   <v-row>
@@ -329,8 +338,8 @@ import axios from 'axios'
         birthday: new Date().toISOString().substring(0,10),
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2010-01-01")) return 'Du bist vielleicht noch etwas zu jung für\'s XXL. Wie wär\'s mit dem Kinderlager? :)'
-            if (new Date(value) < new Date("2006-01-01")) return 'Du bist ja schon über 17! Magst du vielleicht als Leiter mitkommen? :)'
+            if (new Date(value) > new Date("2011-01-01")) return 'Du bist vielleicht noch etwas zu jung für\'s XXL. Wie wär\'s mit dem Kinderlager? :)'
+            if (new Date(value) < new Date("2007-01-01")) return 'Du bist ja schon über 17! Magst du vielleicht als Leiter mitkommen? :)'
             return true 
           },
         ],
@@ -363,6 +372,7 @@ import axios from 'axios'
         ],
         
         insurance: "",
+        doctor: "",
         tetanus: "1",
         swim: "1",
         swimAllowed: "1",
@@ -426,8 +436,8 @@ import axios from 'axios'
       async sendData() {
         
         const endpoint = "/registration/xxl";
-        await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
-        //await axios.post('http://localhost:5000' + endpoint, {
+        // await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
+        await axios.post('http://localhost:5000' + endpoint, {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
@@ -445,6 +455,7 @@ import axios from 'axios'
           experienceXXL: this.experienceXXL,
           supervisors: this.supervisors,
           insurance: this.insurance,
+          doctor: this.doctor,
           tetanus: this.tetanus,
           swim: this.swim,
           swimAllowed: this.swimAllowed,
