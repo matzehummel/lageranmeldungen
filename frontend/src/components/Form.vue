@@ -324,10 +324,20 @@
         <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
+  <v-row v-if="loading">
+    <v-col class="mx-auto" style="text-align: center;">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
+    </v-col>
+  </v-row>
   <v-row>
     <v-col class="mx-auto" style="text-align: center;">
       <v-btn v-if="validationStatus === 'successful'" mb-4 x-large  color="primary" @click="confirmRegistration()" :disabled="confirmButtonDisabled">
-        Passt alles <v-icon class="mx-2">mdi-thumb-up</v-icon> Anmeldung bestätigen!
+        <v-icon class="mx-2">{{ confirmButtonIcon }}</v-icon> {{ confirmButtonText }}
+        <!-- {{ confirmButtonText }} -->
       </v-btn>
     </v-col>
   </v-row>
@@ -363,7 +373,7 @@ import axios from 'axios'
         birthday: new Date().toISOString().substring(0,10),
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2015-07-31")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
+            if (new Date(value) > new Date("2015-08-01")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
             if (new Date(value) < new Date("2010-01-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
             return true 
           },
@@ -442,8 +452,10 @@ import axios from 'axios'
             return 'Für die Anmeldung ist eine Zustimmung erforderlich.'
           }
         ],
-
-        confirmButtonDisabled: false
+        loading: false,
+        confirmButtonDisabled: false,
+        confirmButtonText: "Anmeldung bestätigen!",
+        confirmButtonIcon: "mdi-thumb-up"
       }
     },
 
@@ -471,6 +483,9 @@ import axios from 'axios'
         window.scrollTo(0,0);
       },
       async confirmRegistration() {
+        this.loading = true;
+        this.confirmButtonIcon = "mdi-check-circle"
+        this.confirmButtonText = "Anmeldung wird übermittelt ..."
         const valid = await this.validateForm();
         if(valid) {
           this.confirmButtonDisabled = true;
@@ -485,8 +500,8 @@ import axios from 'axios'
       async sendData() {
         
         
-        // await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
-        await axios.post('http://localhost:5000/registration/kinderlager', {
+        await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        // await axios.post('http://localhost:5000/registration/kinderlager', {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,

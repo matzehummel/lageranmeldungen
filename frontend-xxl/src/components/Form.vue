@@ -299,10 +299,20 @@
         <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
+  <v-row v-if="loading">
+    <v-col class="mx-auto" style="text-align: center;">
+      <v-progress-circular
+        indeterminate
+        color="primary"
+        size="64"
+      ></v-progress-circular>
+    </v-col>
+  </v-row>
   <v-row>
     <v-col class="mx-auto" style="text-align: center;">
-      <v-btn mb-4 x-large v-if="validationStatus === 'successful'" color="primary" @click="confirmRegistration()" :disabled="confirmButtonDisabled">
-        Passt alles <v-icon class="mx-2">mdi-thumb-up</v-icon> Anmeldung bestätigen!
+      <v-btn v-if="validationStatus === 'successful'" mb-4 x-large  color="primary" @click="confirmRegistration()" :disabled="confirmButtonDisabled">
+        <v-icon class="mx-2">{{ confirmButtonIcon }}</v-icon> {{ confirmButtonText }}
+        <!-- {{ confirmButtonText }} -->
       </v-btn>
     </v-col>
   </v-row>
@@ -394,7 +404,10 @@ import axios from 'axios'
           }
         ],
 
-        confirmButtonDisabled: false
+        loading: false,
+        confirmButtonDisabled: false,
+        confirmButtonText: "Anmeldung bestätigen!",
+        confirmButtonIcon: "mdi-thumb-up"
       }
     },
 
@@ -422,6 +435,9 @@ import axios from 'axios'
         window.scrollTo(0,0);
       },
       async confirmRegistration() {
+        this.loading = true;
+        this.confirmButtonIcon = "mdi-check-circle"
+        this.confirmButtonText = "Anmeldung wird übermittelt ..."
         const valid = await this.validateForm();
         if(valid) {
           this.confirmButtonDisabled = true;
@@ -436,8 +452,8 @@ import axios from 'axios'
       async sendData() {
         
         const endpoint = "/registration/xxl";
-        // await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
-        await axios.post('http://localhost:5000' + endpoint, {
+        await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
+        // await axios.post('http://localhost:5000' + endpoint, {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,

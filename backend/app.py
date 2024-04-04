@@ -19,19 +19,19 @@ CORS(app, resources = {r"/*": { "origins": "*" }})
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
 mongoClient = MongoClient(mongodb_connection_string)
-db = mongoClient.lageranmeldungen
+db = mongoClient.lageranmeldungen2024
 print("Connected to database")
 
 @app.route('/index')
 @cross_origin()
 def index():
-    return "POST /registration"
+    return "POST /registration/kinderlager <br> POST /registration/xxl <br> GET /index <br>"
 
 @app.route('/registration/kinderlager', methods=['POST'])
 @cross_origin()
 def add_registration():
     data = request.get_json()
-    collection = db["registrations"]
+    collection = db["kinderlager"]
     result = collection.insert_one(parseDataForDb(data, type="kinderlager"))
     data, pdfFilename, childFirstName, childLastName = parseData(data)
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
@@ -42,7 +42,7 @@ def add_registration():
 @cross_origin()
 def add_registration_xxl():
     data = request.get_json()
-    collection = db["registrations_xxl"]
+    collection = db["xxl"]
     dbData = parseDataForDb(data, type="xxl")
     result = collection.insert_one(dbData)
     data, pdfFilename, childFirstName, childLastName = parseData(data)
@@ -182,9 +182,11 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2024 hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
-        Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei einem Lagerleiter einwerfen.
-        <br/><br/>
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        unterschriebene Formular <u><strong>bis zum 01.07.2024</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />
+        <br/>
+        Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
+        <br/>
         Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2024 mit Dir!<br />
         Deine Leiterrunde</p>
         """.format(childFirstName)
@@ -195,9 +197,11 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das XXL-Lager 2024 hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und bring es zum Vortreffen wieder mit.<br />
-        Alternativ kannst du das unterschriebene Formular im Pfarrbüro oder bei Lagerleiter Christian in Döggingen einwerfen.
-        <br/><br/>
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        unterschriebene Formular <u><strong>bis zum 01.07.2024</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />.
+        <br/>
+        Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
+        <br/>
         Wir freuen uns schon auf ein wundersch&ouml;nes XXL 2024 mit Dir!<br />
         Deine XXL-Leiterrunde</p>
         """.format(childFirstName)
