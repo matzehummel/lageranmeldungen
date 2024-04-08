@@ -293,8 +293,8 @@
           wirf das unterschriebene Formular in den Briefkasten des Pfarrbüros in Bräunlingen (Hüfingerstr. 2).
           <!-- Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen. -->
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
-        <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
-          auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
+          <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
+          in der alles Weitere näher beschrieben wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
         <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>

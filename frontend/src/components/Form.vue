@@ -318,10 +318,10 @@
           wirf das unterschriebene Formular in den Briefkasten des Pfarrbüros (Hüfingerstr. 2, 78199 Bräunlingen).
           <!-- Alternativ kannst Du es auch im Vorhinein bei einem Lagerleiter oder im Pfarrbüro einwerfen. -->
           Die Zusammenfassung und den Termin zum Vortreffen erhältst Du rechtzeitig per E-Mail.</p>
-        <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben
-          auf der alles Weitere näher beschrieben sein wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
+        <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
+          in der alles Weitere näher beschrieben wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Dir!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
   <v-row v-if="loading">
@@ -445,7 +445,7 @@ import axios from 'axios'
         checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager, Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
         checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
         checkboxTextPKW: "Meine Erziehungsberechtigten erlauben, dass ich ggf. (z.B. Weg zum Arzt) in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf. *",
-        checkboxTextBiwak: "Meine Erziehungsberechtigten erlauben, dass die Aufsichtspflicht für die Zeit des Biwaks (Übernachtung im Freien) den entsrprechenden Gruppenleiter*innen übertragen wird. Diese sind ggf. noch nicht volljährig.*",
+        checkboxTextBiwak: "Meine Erziehungsberechtigten erlauben, dass die Aufsichtspflicht für die Zeit des Biwaks (Übernachtung im Freien) den entsprechenden Gruppenleiter*innen übertragen wird. Diese sind ggf. noch nicht volljährig.*",
         checkboxRule: [
           value => {
             if(value) return true
