@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's XXL-Lager 2024!</h1></v-col>
+      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's XXL-Lager {{currentYear}}!</h1></v-col>
     </v-row>
     <v-form ref="signupForm">
       <v-row>
@@ -323,9 +323,16 @@
 
 <script>
 import axios from 'axios'
+import * as config from "@/config";
+import { ref } from 'vue';
 
   export default {
     name: 'HelloWorld',
+
+    setup() {
+      const currentYear = ref(config.currentYear);
+      return { currentYear }
+    },
 
     data () {
       return {
@@ -348,8 +355,8 @@ import axios from 'axios'
         birthday: new Date().toISOString().substring(0,10),
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2011-01-01")) return 'Du bist vielleicht noch etwas zu jung für\'s XXL. Wie wär\'s mit dem Kinderlager? :)'
-            if (new Date(value) < new Date("2007-01-01")) return 'Du bist ja schon über 17! Magst du vielleicht als Leiter mitkommen? :)'
+            if (new Date(value) > config.maxBirthday) return 'Du bist vielleicht noch etwas zu jung für\'s XXL. Wie wär\'s mit dem Kinderlager? :)'
+            if (new Date(value) < config.minBirthday) return 'Du bist ja schon über 17! Magst du vielleicht als Leiter mitkommen? :)'
             return true 
           },
         ],

@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's Zeltlager 2024!</h1></v-col>
+      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's Zeltlager {{currentYear}}!</h1></v-col>
     </v-row>
     <v-form ref="signupForm">
       <v-row>
@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2015-08-01"
-                  min="2010-01-01"
+                  max="2016-08-01"
+                  min="2011-01-01"
                   @change="save"
                 ></v-date-picker>
                 <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
@@ -348,9 +348,16 @@
 
 <script>
 import axios from 'axios'
+import * as config from "@/config";
+import { ref } from 'vue';
 
   export default {
     name: 'HelloWorld',
+
+    setup() {
+      const currentYear = ref(config.currentYear);
+      return { currentYear }
+    },
 
     data () {
       return {
@@ -371,10 +378,11 @@ import axios from 'axios'
 
         menu: false,
         birthday: new Date().toISOString().substring(0,10),
+        
         birthdayRules: [
           value => {
-            if (new Date(value) > new Date("2015-08-01")) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
-            if (new Date(value) < new Date("2010-01-01")) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
+            if (new Date(value) > config.maxBirthday) return 'Du bist vielleicht noch etwas zu jung für\'s Zeltlager.'
+            if (new Date(value) < config.minBirthday) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL? :)'
             return true 
           },
         ],
@@ -395,10 +403,10 @@ import axios from 'axios'
         year: '',
         yearRules: [
           value => { 
-            if ((value > 2014)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
-            if ((value < 2010) && (value > 2007)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
-            if ((value < 2014) && (value > 2008)) return true
-            return 'Bitte gültiges Jahr (2009-2013) angeben'
+            if ((value > config.maxYear)) return 'Vielleicht bist du noch etwas zu jung für\'s Lager?'
+            if ((value < config.minYear) && (value > config.minYear-3)) return 'Du bist ja schon über 13! Wie wär\'s mit dem XXL?'
+            if ((value <= config.maxYear) && (value >= config.minYear)) return true
+            return 'Bitte gültiges Jahr (' + config.minYear + '-' + config.maxYear + ') angeben'
           }
         ],
         email: '',
