@@ -99,38 +99,8 @@
                   min="2011-01-01"
                   @change="save"
                 ></v-date-picker>
-                <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                  <v-btn text color="primary" @click="$refs.menu.save(birthday)">OK</v-btn>
-                </v-date-picker>-->
               </v-menu>
             </v-col>
-            
-            <!--<v-col cols="12" md="1" xs="3">
-              <v-text-field
-                v-model="day"
-                :rules="dayRules"
-                label="TT *"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="1" xs="3">
-              <v-text-field
-                v-model="month"
-                :rules="monthRules"
-                label="MM *"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="2" xs="6">
-              <v-text-field
-                v-model="year"
-                :rules="yearRules"
-                label="JJJJ *"
-                required
-              ></v-text-field>
-            </v-col>-->
 
             <v-col cols="12" md="6" xs="12">
               <v-text-field
@@ -321,7 +291,7 @@
         <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
           in der alles Weitere näher beschrieben wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Dir!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager {{currentYear}} mit Dir!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
   <v-row v-if="loading">
@@ -508,8 +478,8 @@ import { ref } from 'vue';
       async sendData() {
         
         
-        await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
-        // await axios.post('http://localhost:5000/registration/kinderlager', {
+        // await axios.post('https://backend.zeltlager-braeunlingen.de/registration/kinderlager', {
+        await axios.post('http://localhost:5000/registration/kinderlager', {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,

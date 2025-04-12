@@ -19,7 +19,7 @@ CORS(app, resources = {r"/*": { "origins": "*" }})
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
 mongoClient = MongoClient(mongodb_connection_string)
-db = mongoClient.lageranmeldungen2024
+db = mongoClient.lageranmeldungen2025
 print("Connected to database")
 
 @app.route('/index')
@@ -176,36 +176,37 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
 
     message=MIMEMultipart()
     #HTML-Mailbody erstellen und Variable message anhaengen
+    currentYear = 2025
     if(type == "kinderlager"):
         htmlbody="""\
         <p>Hallo {},<br />
         <br />
-        Hurra! Deine Anmeldung f&uuml;r das Zeltlager 2024 hat erfolgreich funktioniert.<br />
+        Hurra! Deine Anmeldung f&uuml;r das Zeltlager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
         Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
-        unterschriebene Formular <u><strong>bis zum 01.07.2024</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />
+        unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
         <br/>
-        Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager 2024 mit Dir!<br />
+        Wir freuen uns schon auf ein wundersch&ouml;nes Zeltlager {} mit Dir!<br />
         Deine Leiterrunde</p>
-        """.format(childFirstName)
-        message["subject"] = "Zeltlager 2024 - Anmeldung von " + childFirstName + " " + childLastName
+        """.format(childFirstName, currentYear, currentYear, currentYear)
+        message["subject"] = "Zeltlager " + str(currentYear) + " - Anmeldung von " + childFirstName + " " + childLastName
     elif(type == "xxl"):
         htmlbody="""\
         <p>Hallo {},<br />
         <br />
-        Hurra! Deine Anmeldung f&uuml;r das XXL-Lager 2024 hat erfolgreich funktioniert.<br />
+        Hurra! Deine Anmeldung f&uuml;r das XXL-Lager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
         Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
-        unterschriebene Formular <u><strong>bis zum 01.07.2024</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />.
+        unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />.
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
         <br/>
-        Wir freuen uns schon auf ein wundersch&ouml;nes XXL 2024 mit Dir!<br />
+        Wir freuen uns schon auf ein wundersch&ouml;nes XXL {} mit Dir!<br />
         Deine XXL-Leiterrunde</p>
-        """.format(childFirstName)
-        message["subject"] = "XXL 2024 - Anmeldung von " + childFirstName + " " + childLastName
+        """.format(childFirstName, currentYear, currentYear, currentYear)
+        message["subject"] = "XXL " + str(currentYear) + " - Anmeldung von " + childFirstName + " " + childLastName
    
     
     message["From"]=mail_sender
