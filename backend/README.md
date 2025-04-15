@@ -31,3 +31,34 @@ docker build -t lageranmeldungen_backend .
 ```
 docker run -p 5000:5000 lageranmeldungen_backend
 ```
+
+# Setup VPS Server
+
+## Setup DNS
+- in SCP: Go to Network, under IPv4 add the domain in the rDNS column
+- in CCP: Go to the corresponding domain (zeltlager-braeunlingen.de). Add an entry of type A with the corresponding IP address of the VPS in the row of the subdomain
+
+## Add user
+```
+adduser <username>
+usermod -aG sudo <username>
+su <username>
+```
+
+## Clone repository
+```
+cd /var
+mkdir www
+cd www
+sudo git clone https://github.com/matzehummel/lageranmeldungen.git
+```
+
+## Create venv
+But first make sure, that python and pip are installed
+```
+cd lageranmeldungen/backend
+sudo python3 -m venv .venv
+source .venv/bin/activate
+sudo chown -R $(whoami):$(whoami)  .venv/   # change owner of .venv folder
+pip install -r requirements.txt
+```
