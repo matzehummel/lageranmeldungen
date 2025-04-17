@@ -328,6 +328,7 @@ import { ref } from 'vue';
 
   export default {
     name: 'HelloWorld',
+    sendingDataSuccess: false,
 
     setup() {
       const currentYear = ref(config.currentYear);
@@ -448,9 +449,14 @@ import { ref } from 'vue';
         const valid = await this.validateForm();
         if(valid) {
           this.confirmButtonDisabled = true;
-          const response = await this.sendData();
-          console.log(response);
-          window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
+          await this.sendData();
+          if(this.sendingDataSuccess) {
+            console.log("Data sent successfully");
+            window.location.assign('https://zeltlager-braeunlingen.de/du-bist-angemeldet/');
+          } else {
+            console.log("Error sending data");
+            // TODO: Go to Error Page
+          }
         } else {
           this.confirmButtonDisabled = false;
           this.scrollToTop()
@@ -459,8 +465,7 @@ import { ref } from 'vue';
       async sendData() {
         
         const endpoint = "/registration/xxl";
-        await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint, {
-        // await axios.post('http://localhost:5000' + endpoint, {
+        var payload = {
           sexe: this.sexe,
           childLastName: this.childLastName,
           childFirstName: this.childFirstName,
@@ -488,12 +493,22 @@ import { ref } from 'vue';
           availability: this.availability,
           alternativeAddress: this.alternativeAddress,
           sonst: this.sonst,
-        })
+        };
+        await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint,
+        // await axios.post('http://localhost:5000' + endpoint, )
+          payload
+        )
         .then(response => {
           console.log(response.data)
+          if(response.status === 200) {
+            this.sendingDataSuccess = true;
+          } else {
+            this.sendingDataSuccess = false;
+          }
         })
         .catch(error => {
           console.log(error)
+          this.sendingDataSuccess = false;
         })
 
       }

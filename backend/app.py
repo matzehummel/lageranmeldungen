@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import logging
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
@@ -22,6 +23,17 @@ mongoClient = MongoClient(mongodb_connection_string)
 db = mongoClient.lageranmeldungen2025
 print("Connected to database")
 
+# Log to stdout (for journalctl)
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+handler.setFormatter(formatter)
+
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.INFO)
+app.logger.propagate = False  # <--- This stops the double logging!
+
+
 @app.route('/index')
 @cross_origin()
 def index():
@@ -30,24 +42,28 @@ def index():
 @app.route('/registration/kinderlager', methods=['POST'])
 @cross_origin()
 def add_registration():
+    app.logger.info("New Registration for Kinderlager!")
     data = request.get_json()
     collection = db["kinderlager"]
     result = collection.insert_one(parseDataForDb(data, type="kinderlager"))
     data, pdfFilename, childFirstName, childLastName = parseData(data)
+    app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
-    print(send_mail_result)
+    app.logger.info(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 @app.route('/registration/xxl', methods=['POST'])
 @cross_origin()
 def add_registration_xxl():
+    app.logger.info("New Registration for XXL!")
     data = request.get_json()
     collection = db["xxl"]
     dbData = parseDataForDb(data, type="xxl")
     result = collection.insert_one(dbData)
     data, pdfFilename, childFirstName, childLastName = parseData(data)
+    app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
-    print(send_mail_result)
+    app.logger.info(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 def parseDataForDb(data, type):
@@ -78,7 +94,7 @@ def parseDataForDb(data, type):
             "1 mal dabei": 1,
             "2 mal dabei": 2
         }.get(dbData["experienceXXL"], "undef")
-    
+
     elif(type == "kinderlager"):
         dbData["experience"] = {
             "schon einmal auf dem Zeltlager dabei": 1,
@@ -98,7 +114,7 @@ def parseData(data):
         data["swim"] = "schwimmen"
     else:
         data["swim"] = "NICHT schwimmen"
-    
+
     if(data["swimAllowed"] == "1"):
        data["swimAllowed"] = "erlaubt"
     else:
@@ -108,7 +124,7 @@ def parseData(data):
         data["milk"] = "ungekochte, frische Milch trinken."
     else:
         data["milk"] = "KEINE ungekochte, frische Milch trinken."
-    
+
     if(data["availability"] == "1"):
         data["availability"] = "unter obiger Anschrift zu erreichen."
     elif(data["availability"] == "2"):
@@ -145,15 +161,15 @@ def parseData(data):
 def create_pdf(data, pdfFilename, type):
     template_loader = jinja2.FileSystemLoader('./')
     template_env = jinja2.Environment(loader=template_loader)
-    
+
     #reads template and replaces the placeholder with the given JSON-Data
     if(type == "xxl"):
         template=template_env.get_template('html-template-xxl.html')
-    elif(type == "kinderlager"):    
+    elif(type == "kinderlager"):
         template=template_env.get_template('html-template.html')
     output_text=template.render(data)
     #PDFfilename = "Anmeldebestaetigung_"+data["childFirstName"]+data["childLastName"]+".pdf"
-    
+
     #set the location of wkhtmltopdf and it generates the pdf
     config  =pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_PATH'))
     options = {
@@ -164,7 +180,7 @@ def create_pdf(data, pdfFilename, type):
         'margin-left': '2cm'
     }
 
-    pdfkit.from_string(output_text, 'pdf/'+pdfFilename, configuration=config, options=options)
+    pdfkit.from_string(output_text, '/var/www/lageranmeldungen/backend/pdf/'+pdfFilename, configuration=config, options=options)
     return pdfFilename
 
 def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
@@ -183,7 +199,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das Zeltlager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das
         unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
@@ -198,7 +214,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das XXL-Lager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das
         unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />.
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
@@ -207,8 +223,8 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         Deine XXL-Leiterrunde</p>
         """.format(childFirstName, currentYear, currentYear, currentYear)
         message["subject"] = "XXL " + str(currentYear) + " - Anmeldung von " + childFirstName + " " + childLastName
-   
-    
+
+
     message["From"]=mail_sender
     message["To"]=mail_receiver
     messagebody=MIMEText(htmlbody, "html")
