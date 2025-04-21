@@ -296,7 +296,7 @@
           <p style="text-align: left;">Nach dem Anmeldeschluss wird es eine erste Lagerpost geben,
           in der alles Weitere näher beschrieben wird. Diese werden wir per E-Mail an die oben genannte Adresse versenden. Das Vortreffen wird Anfang Juli stattfinden.
           Dort werden wir Euch alle noch offenen Fragen beantworten.</p>
-        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager 2024 mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
+        <p style="text-align: left;">Wir freuen uns auf ein superschönes Lager {{currentYear}} mit Euch!<br><br>Liebe Grüße, Euer Zeltlager-Team</p>
     </v-col>
   </v-row>
   <v-row v-if="loading">
