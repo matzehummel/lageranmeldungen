@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2010-12-31"
-                  min="2007-01-01"
+                  max="2011-12-31"
+                  min="2007-08-01"
                   @change="save"
                 ></v-date-picker>
                 <!--<v-date-picker v-model="birthday" no-title scrollable locale="de" required>
