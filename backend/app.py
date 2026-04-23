@@ -94,7 +94,7 @@ def parseDataForDb(data, type):
             "1 mal dabei": 1,
             "2 mal dabei": 2
         }.get(dbData["experienceXXL"], "undef")
-    
+
     elif(type == "kinderlager"):
         dbData["experience"] = {
             "schon einmal auf dem Zeltlager dabei": 1,
@@ -114,7 +114,7 @@ def parseData(data):
         data["swim"] = "schwimmen"
     else:
         data["swim"] = "NICHT schwimmen"
-    
+
     if(data["swimAllowed"] == "1"):
        data["swimAllowed"] = "erlaubt"
     else:
@@ -124,7 +124,7 @@ def parseData(data):
         data["milk"] = "ungekochte, frische Milch trinken."
     else:
         data["milk"] = "KEINE ungekochte, frische Milch trinken."
-    
+
     if(data["availability"] == "1"):
         data["availability"] = "unter obiger Anschrift zu erreichen."
     elif(data["availability"] == "2"):
@@ -161,15 +161,15 @@ def parseData(data):
 def create_pdf(data, pdfFilename, type):
     template_loader = jinja2.FileSystemLoader('./')
     template_env = jinja2.Environment(loader=template_loader)
-    
+
     #reads template and replaces the placeholder with the given JSON-Data
     if(type == "xxl"):
         template=template_env.get_template('html-template-xxl.html')
-    elif(type == "kinderlager"):    
+    elif(type == "kinderlager"):
         template=template_env.get_template('html-template.html')
     output_text=template.render(data)
     #PDFfilename = "Anmeldebestaetigung_"+data["childFirstName"]+data["childLastName"]+".pdf"
-    
+
     #set the location of wkhtmltopdf and it generates the pdf
     config  =pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_PATH'))
     options = {
@@ -199,7 +199,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das Zeltlager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das
         unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
@@ -214,7 +214,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         <br />
         Hurra! Deine Anmeldung f&uuml;r das XXL-Lager {} hat erfolgreich funktioniert.<br />
         Im Anhang findest du eine PDF-Datei mit all deinen angegebenen Daten.<br />
-        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das 
+        Drucke die PDF bitte aus, <u><strong>lass deine Eltern darauf unterschreiben</strong></u> und wirf das
         unterschriebene Formular <u><strong>bis zum 01.07.{}</strong></u> im Pfarrb&uuml;ro (H&uuml;fingerstraße 2, 78199 Br&auml;unlingen) wieder ein.<br />.
         <br/>
         Pr&uuml;fe bitte regelm&auml;ssig Dein Postfach. Weitere Infos kommen dann von uns per Mail.<br />
@@ -223,8 +223,8 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
         Deine XXL-Leiterrunde</p>
         """.format(childFirstName, currentYear, currentYear, currentYear)
         message["subject"] = "XXL " + str(currentYear) + " - Anmeldung von " + childFirstName + " " + childLastName
-   
-    
+
+
     message["From"]=mail_sender
     message["To"]=mail_receiver
     messagebody=MIMEText(htmlbody, "html")
