@@ -30,5 +30,6 @@
 */*.sln
 */*.sw?
 
-*/pdf/*
+*/*/*.pdf
+*/.venv
 */__pycache__

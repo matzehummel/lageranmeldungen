@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 import os
+import logging
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
 from pymongo import MongoClient
@@ -22,6 +23,17 @@ mongoClient = MongoClient(mongodb_connection_string)
 db = mongoClient.lageranmeldungen2025
 print("Connected to database")
 
+# Log to stdout (for journalctl)
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s %(levelname)s: %(message)s')
+handler.setFormatter(formatter)
+
+app.logger.addHandler(handler)
+app.logger.setLevel(logging.INFO)
+app.logger.propagate = False  # <--- This stops the double logging!
+
+
 @app.route('/index')
 @cross_origin()
 def index():
@@ -30,24 +42,28 @@ def index():
 @app.route('/registration/kinderlager', methods=['POST'])
 @cross_origin()
 def add_registration():
+    app.logger.info("New Registration for Kinderlager!")
     data = request.get_json()
     collection = db["kinderlager"]
     result = collection.insert_one(parseDataForDb(data, type="kinderlager"))
     data, pdfFilename, childFirstName, childLastName = parseData(data)
+    app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
-    print(send_mail_result)
+    app.logger.info(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 @app.route('/registration/xxl', methods=['POST'])
 @cross_origin()
 def add_registration_xxl():
+    app.logger.info("New Registration for XXL!")
     data = request.get_json()
     collection = db["xxl"]
     dbData = parseDataForDb(data, type="xxl")
     result = collection.insert_one(dbData)
     data, pdfFilename, childFirstName, childLastName = parseData(data)
+    app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
-    print(send_mail_result)
+    app.logger.info(send_mail_result)
     return 'New registration added to database: ' + str(result.inserted_id)
 
 def parseDataForDb(data, type):
@@ -164,7 +180,7 @@ def create_pdf(data, pdfFilename, type):
         'margin-left': '2cm'
     }
 
-    pdfkit.from_string(output_text, 'pdf/'+pdfFilename, configuration=config, options=options)
+    pdfkit.from_string(output_text, '/var/www/lageranmeldungen/backend/pdf/'+pdfFilename, configuration=config, options=options)
     return pdfFilename
 
 def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
