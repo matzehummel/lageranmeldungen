@@ -95,8 +95,8 @@
                 </template>
                 <v-date-picker
                   ref="picker"
-                  max="2016-08-01"
-                  min="2011-01-01"
+                  max="2017-08-01"
+                  min="2012-01-01"
                   @change="save"
                 ></v-date-picker>
               </v-menu>
