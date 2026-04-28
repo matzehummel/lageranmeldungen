@@ -144,6 +144,11 @@ If you now check your nginx config (`/etc/nginx/sites-available/lageranmeldungen
 | `systemctl <COMMADN> <SERVICE>` | `<COMMAND>`: `start`, `stop`, `restart` a service |
 | `systemctl status <SERVICE>` | Print the details about the status of a service |
 
+## journalctl
+| Command | Description |
+|---------|-------------|
+| `journalctl -u <SERVICE>` | Print logs of a service |
+
 ## File management
 | Command | Description |
 |---------|-------------|
