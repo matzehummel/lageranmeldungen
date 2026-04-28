@@ -20,7 +20,7 @@ CORS(app, resources = {r"/*": { "origins": "*" }})
 
 mongodb_connection_string = os.environ.get('MONGODB_CONNECTION_STRING')
 mongoClient = MongoClient(mongodb_connection_string)
-db = mongoClient.lageranmeldungen2025
+db = mongoClient.lageranmeldungen2026
 print("Connected to database")
 
 # Log to stdout (for journalctl)
@@ -192,7 +192,7 @@ def send_Mail(data, PDFfilename, childFirstName, childLastName, type):
 
     message=MIMEMultipart()
     #HTML-Mailbody erstellen und Variable message anhaengen
-    currentYear = 2025
+    currentYear = 2026
     if(type == "kinderlager"):
         htmlbody="""\
         <p>Hallo {},<br />
