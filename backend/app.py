@@ -120,11 +120,6 @@ def parseData(data):
     else:
         data["swimAllowed"] = "NICHT erlaubt"
 
-    if(data["milk"] == "1"):
-        data["milk"] = "ungekochte, frische Milch trinken."
-    else:
-        data["milk"] = "KEINE ungekochte, frische Milch trinken."
-
     if(data["availability"] == "1"):
         data["availability"] = "unter obiger Anschrift zu erreichen."
     elif(data["availability"] == "2"):

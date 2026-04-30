@@ -220,13 +220,6 @@
                 <v-radio label="vegetarisch" value="1"></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col cols="12" md="9" xs="12">
-              <v-radio-group label="Wir beziehen die Frischmilch zum Frühstück oft direkt vom Bauern vor Ort. Diese ist jedoch nicht immer abgekocht, weswegen die Keimfreiheit nicht gewährleistet ist. Ich darf ..."
-                  required v-model="milk">
-                <v-radio label="ungekochte, frische Milch trinken" value="1"></v-radio>
-                <v-radio label="KEINE ungekochte, frische Milch trinken" value="0"></v-radio>
-              </v-radio-group>
-            </v-col>
             <v-col cols="12" md="12" xs="12">
               <p style="text-align:left">Folgende besonderen Krankheiten, Allergien, Lebensmittelunverträglichkeiten, Operationen, Unfälle, etc. verlangen während des Zeltlagers in besonderer Weise Vorsicht und Rücksichtnahme (bitte auch Auflistung von Medikamenten, die während der Freizeit zu nehmen sind):</p>
               <v-textarea background-color="accent"
@@ -414,7 +407,6 @@ import { ref } from 'vue';
         swim: "1",
         swimAllowed: "1",
         vegetarian: "0",
-        milk: "1",
         issues: "",
         availability: "1",
         alternativeAddress: "",
@@ -505,7 +497,6 @@ import { ref } from 'vue';
           swim: this.swim,
           swimAllowed: this.swimAllowed,
           vegetarian: this.vegetarian,
-          milk: this.milk,
           issues: this.issues,
           availability: this.availability,
           alternativeAddress: this.alternativeAddress,
