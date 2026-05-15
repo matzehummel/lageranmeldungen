@@ -1,7 +1,10 @@
 <template>
   <v-container>
     <v-row>
-      <v-col><h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's XXL-Lager {{currentYear}}!</h1></v-col>
+      <v-col>
+        <h1 style="text-align: center; color: #495c41;">Willkommen bei der Anmeldung für's XXL-Lager {{currentYear}}!</h1>
+        <h2 style="text-align: center; color: #495c41;">XXL goes wild!</h2>
+      </v-col>
     </v-row>
     <v-form ref="signupForm">
       <v-row>
@@ -228,13 +231,6 @@
                 <v-radio label="vegetarisch" value="1"></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col cols="12" md="9" xs="12">
-              <v-radio-group label="Wir beziehen die Frischmilch zum Frühstück oft direkt vom Bauern vor Ort. Diese ist jedoch nicht immer abgekocht, weswegen die Keimfreiheit nicht gewährleistet ist. Ich darf ..."
-                  required v-model="milk">
-                <v-radio label="ungekochte, frische Milch trinken" value="1"></v-radio>
-                <v-radio label="KEINE ungekochte, frische Milch trinken" value="0"></v-radio>
-              </v-radio-group>
-            </v-col>
             <v-col cols="12" md="12" xs="12">
               <p style="text-align:left">Folgende besonderen Krankheiten, Allergien, Lebensmittelunverträglichkeiten, Operationen, Unfälle, etc. verlangen während des Zeltlagers in besonderer Weise Vorsicht und Rücksichtnahme (bitte auch Auflistung von Medikamenten, die während der Freizeit zu nehmen sind):</p>
               <v-textarea background-color="accent"
@@ -270,6 +266,9 @@
             </v-col>
             <v-col cols="12" md="12" xs="12">
               <v-checkbox :label=checkboxTextPKW required :rules="checkboxRule"></v-checkbox>
+            </v-col>
+            <v-col cols="12" md="12" xs="12">
+              <v-checkbox :label=checkboxTextCanoe required :rules="checkboxRule"></v-checkbox>
             </v-col>
         </v-row>
         
@@ -395,7 +394,6 @@ import { ref } from 'vue';
         swim: "1",
         swimAllowed: "1",
         vegetarian: "0",
-        milk: "1",
         issues: "",
         availability: "1",
         alternativeAddress: "",
@@ -405,6 +403,7 @@ import { ref } from 'vue';
         checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager, Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
         checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
         checkboxTextPKW: "Meine Erziehungsberechtigten erlauben, dass ich ggf. (z.B. Weg zum Arzt) in einem Privat-PKW bei einem/einer Leiter*in mitfahren darf. *",
+        checkboxTextCanoe: "Meine Erziehungsberechtigten bestätigen, dass ich sicher schwimmen kann und erlauben mir, gemeinsam mit anderen Kindern selbstständig in einem 3er-Kanadier an der begleiteten Kanutour auf dem Rhein teilzunehmen. *",
         checkboxRule: [
           value => {
             if(value) return true
@@ -488,7 +487,6 @@ import { ref } from 'vue';
           swim: this.swim,
           swimAllowed: this.swimAllowed,
           vegetarian: this.vegetarian,
-          milk: this.milk,
           issues: this.issues,
           availability: this.availability,
           alternativeAddress: this.alternativeAddress,
