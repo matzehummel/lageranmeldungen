@@ -214,7 +214,7 @@
                 <v-radio label="NICHT erlaubt" value="0"></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col cols="12" md="3" xs="12">
+            <v-col cols="12" md="9" xs="12">
               <v-radio-group label="Ich ernähre mich ..." required v-model="vegetarian">
                 <v-radio label="NICHT vegetarisch" value="0"></v-radio>
                 <v-radio label="vegetarisch" value="1"></v-radio>

@@ -225,10 +225,18 @@
                 <v-radio label="NICHT erlaubt" value="0"></v-radio>
               </v-radio-group>
             </v-col>
-            <v-col cols="12" md="3" xs="12">
+            <v-col cols="12" md="9" xs="12">
               <v-radio-group label="Ich ernähre mich ..." required v-model="vegetarian">
                 <v-radio label="NICHT vegetarisch" value="0"></v-radio>
                 <v-radio label="vegetarisch" value="1"></v-radio>
+              </v-radio-group>
+            </v-col>
+            <v-col cols="12" md="12" xs="12">
+              <v-radio-group :label=radioGroupCanoe required v-model="canoe">
+                <v-radio :label=radioGroupCanoeOpt0 value="Ja"></v-radio>
+                <v-radio :label=radioGroupCanoeOpt1 value="Leiter"></v-radio>
+                <v-radio :label=radioGroupCanoeOpt2 value="Guide"></v-radio>
+                <v-radio :label=radioGroupCanoeOpt3 value="Nein"></v-radio>
               </v-radio-group>
             </v-col>
             <v-col cols="12" md="12" xs="12">
@@ -394,11 +402,17 @@ import { ref } from 'vue';
         swim: "1",
         swimAllowed: "1",
         vegetarian: "0",
+        canoe: "Ja",
         issues: "",
         availability: "1",
         alternativeAddress: "",
         sonst: "",
 
+        radioGroupCanoe: "Während der Freizeit wird eine Kanutour stattfinden bei der die Teilnehmenden durch einen geschulten Guide angeleitet werden. Aus organisatorischen Gründen kann nicht jedes der 3er-Kanadier mit einem Guide oder Leiter besetzt werden. Ich darf ...",
+        radioGroupCanoeOpt0: "... mit 2 anderen Teilnehmenden in einem 3er-Kanadier an der Kanutour teilnehmen.",
+        radioGroupCanoeOpt1: "... an der Kanutour teilnehmen, aber es muss ein Leiter/eine Leiterin in meinem 3er-Kanadier mitfahren.",
+        radioGroupCanoeOpt2: "... an der Kanutour teilnehmen, aber es muss ein geschulter Guide in meinem 3er-Kanadier mitfahren.",
+        radioGroupCanoeOpt3: "... an der Kanutour NICHT teilnehmen.",
         checkboxTextAufsicht: "Für die Dauer der Freizeit wird das Erziehungsrecht und die Aufsichtspflicht den Leiter*innen übertragen. *",
         checkboxTextBilder: "Meine Erziehungsberechtigten erlauben dem Zeltlager, Bilder auf denen ich zu sehen bin, in einem Diavortrag bzw. in der Zeitung oder auf der Webseite zu veröffentlichen. *",
         checkboxTextErsteHilfe: "Meine Erziehungsberechtigten erlauben, dass mir in Notfällen Erste Hilfe geleistet werden darf. Insektenstiche, kleine Wunden und leichte gesundheitliche Beschwerden dürfen versorgt und Zecken entfernt werden. Bei schwereren (oder schlimmeren) Verletzungen und schweren gesundheitlichen Beschwerden wird ein Arzt oder Krankenhaus aufgesucht. *",
@@ -487,13 +501,14 @@ import { ref } from 'vue';
           swim: this.swim,
           swimAllowed: this.swimAllowed,
           vegetarian: this.vegetarian,
+          canoe: this.canoe,
           issues: this.issues,
           availability: this.availability,
           alternativeAddress: this.alternativeAddress,
           sonst: this.sonst,
         };
-        await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint,
-        // await axios.post('http://localhost:5000' + endpoint, )
+        // await axios.post('https://backend.zeltlager-braeunlingen.de' + endpoint,
+        await axios.post('http://localhost:5000' + endpoint,
           payload
         )
         .then(response => {

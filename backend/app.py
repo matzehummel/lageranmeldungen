@@ -46,7 +46,7 @@ def add_registration():
     data = request.get_json()
     collection = db["kinderlager"]
     result = collection.insert_one(parseDataForDb(data, type="kinderlager"))
-    data, pdfFilename, childFirstName, childLastName = parseData(data)
+    data, pdfFilename, childFirstName, childLastName = parseData(data, type="kinderlager")
     app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "kinderlager"), childFirstName, childLastName, "kinderlager")
     app.logger.info(send_mail_result)
@@ -60,7 +60,7 @@ def add_registration_xxl():
     collection = db["xxl"]
     dbData = parseDataForDb(data, type="xxl")
     result = collection.insert_one(dbData)
-    data, pdfFilename, childFirstName, childLastName = parseData(data)
+    data, pdfFilename, childFirstName, childLastName = parseData(data, type="xxl")
     app.logger.info(f"Name: {childFirstName} {childLastName} ({pdfFilename})")
     send_mail_result = send_Mail(data, create_pdf(data, pdfFilename, "xxl"), childFirstName, childLastName, "xxl")
     app.logger.info(send_mail_result)
@@ -104,7 +104,7 @@ def parseDataForDb(data, type):
     return dbData
 
 
-def parseData(data):
+def parseData(data, type):
     if(data["tetanus"] == "1"):
         data["tetanus"] = "bin ich geimpft"
     else:
@@ -129,6 +129,19 @@ def parseData(data):
 
     if(data["sonst"] == ""):
         data["sonst"] = "-"
+
+    if(type=="xxl"):
+        match data["canoe"] :
+            case "Ja":
+                data["canoe"] = "darf ich teilnehmen. In meinem 3-er Kanadier sitzen 2 weitere Teilnehmende, jedoch keine erwachsene Person."
+            case "Leiter":
+                data["canoe"] = "darf ich teilnehmen. In meinem 3-er Kanadier sitzt ausserdem ein Leiter/eine Leiterin."
+            case "Guide":
+                data["canoe"] = "darf ich teilnehmen. In meinem 3-er Kanadier sitzt ausserdem ein ausgebildeter Guide."
+            case "Nein":
+                data["canoe"] = "darf ich NICHT teilnehmen."
+            case _:
+                data["canoe"] = "-"
 
     pdfFilename = "Anmeldebestaetigung_" + data["childFirstName"] + data["childLastName"] + ".pdf"
     childFirstName = data["childFirstName"]
