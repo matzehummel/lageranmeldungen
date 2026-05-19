@@ -131,6 +131,7 @@ def parseData(data, type):
         data["sonst"] = "-"
 
     if(type=="xxl"):
+        # An der begleiteten Kanutour auf dem Rhein ...
         match data["canoe"] :
             case "Ja":
                 data["canoe"] = "darf ich teilnehmen. In meinem 3-er Kanadier sitzen 2 weitere Teilnehmende, jedoch keine erwachsene Person."
